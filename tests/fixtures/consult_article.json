@@ -1,0 +1,112 @@
+{
+ "executionTime": 0,
+ "dereferenced": false,
+ "article": {
+  "id": "LEGIARTI000006419288",
+  "idTexte": null,
+  "type": "AUTONOME",
+  "texte": "Chacun a droit au respect de sa vie privÃ©e. Les juges peuvent, sans prÃ©judice de la rÃ©paration du dommage subi, prescrire toutes mesures, telles que sÃ©questre, saisie et autres, propres Ã  empÃªcher ou faire cesser une atteinte Ã  l'intimitÃ© de la vie privÃ©e : ces mesures peuvent, s'il y a urgence, Ãªtre ordonnÃ©es en rÃ©fÃ©rÃ©.",
+  "num": "9",
+  "origine": "LEGI",
+  "nature": "Article",
+  "versionArticle": "3.0",
+  "etat": "VIGUEUR",
+  "dateDebut": 17193600000,
+  "dateFin": 32472144000000,
+  "dateDebutExtension": 32472144000000,
+  "dateFinExtension": 32472144000000,
+  "inap": null,
+  "ordre": 128847,
+  "context": {
+   "titresTM": [
+    {
+     "debut": "1804-03-21",
+     "fin": "2999-01-01",
+     "titre": "Livre Ier : Des personnes",
+     "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TITRE_TM",
+     "cid": "LEGISCTA000006089697",
+     "id": "LEGISCTA000006089697",
+     "etat": "VIGUEUR"
+    },
+    {
+     "debut": "1994-07-30",
+     "fin": "2999-01-01",
+     "titre": "Titre Ier : Des droits civils",
+     "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TITRE_TM",
+     "cid": "LEGISCTA000006117610",
+     "id": "LEGISCTA000006117610",
+     "etat": "VIGUEUR"
+    }
+   ],
+   "nombreVersionParent": 1,
+   "longeurChemin": 38,
+   "titreTxt": [
+    {
+     "debut": "1804-03-21",
+     "fin": "2999-01-01",
+     "titre": "Code civil",
+     "xPath": "/ARTICLE/CONTEXTE/TEXTE/TITRE_TXT",
+     "cid": "LEGITEXT000006070721",
+     "id": "LEGITEXT000006070721",
+     "etat": "VIGUEUR"
+    }
+   ]
+  },
+  "cid": "LEGIARTI000006419288",
+  "cidTexte": null,
+  "sectionParentCid": "LEGISCTA000006117610",
+  "sectionParentId": "LEGISCTA000006117610",
+  "sectionParentTitre": "Titre Ier : Des droits civils",
+  "fullSectionsTitre": "Livre Ier : Des personnes",
+  "refInjection": "MD-20260424_200447_879_BDJQUOT",
+  "idTechInjection": "index_DATA_NEXT_ARTICLE_LEGIARTI000006419288",
+  "idEli": null,
+  "idEliAlias": null,
+  "textTitles": [
+   {
+    "id": "LEGITEXT000006070721",
+    "titre": "Code civil",
+    "titreLong": "Code civil",
+    "etat": "VIGUEUR",
+    "dateDebut": -5231606400000,
+    "dateFin": 32472144000000,
+    "cid": "LEGITEXT000006070721",
+    "datePubli": 32472144000000,
+    "datePubliComputed": null,
+    "dateTexte": 32472144000000,
+    "dateTexteComputed": null,
+    "nature": "CODE",
+    "nor": "",
+    "num": "",
+    "numParution": "",
+    "originePubli": "",
+    "appliGeo": null,
+    "codesNomenclatures": [],
+    "visas": null,
+    "nota": null,
+    "notice": null,
+    "travauxPreparatoires": null,
+    "signataires": null,
+    "dossiersLegislatifs": [],
+    "ancienId": null,
+    "appellations": null
+   }
+  ],
+  "nota": "",
+  "activitePro": [],
+  "numeroBrochure": [],
+  "numeroBo": null,
+  "computedNums": [
+   "9"
+  ],
+  "versionPrecedente": "LEGIARTI000050396821",
+  "conditionDiffere": null,
+  "surtitre": null,
+  "renvoi": null,
+  "infosComplementaires": null,
+  "infosRestructurationBranche": null,
+  "infosRestructurationBrancheHtml": null,
+  "isMultipleVersions": true,
+  "comporteLiensSP": false
+ }
+}

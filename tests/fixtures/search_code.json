@@ -1,0 +1,76 @@
+{
+ "executionTime": 100,
+ "results": [
+  {
+   "titles": [
+    {
+     "id": "LEGITEXT000006070721_09-04-2026",
+     "cid": "LEGITEXT000006070721",
+     "title": "Code civil",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": null,
+   "type": "data_legi",
+   "nature": "code",
+   "origin": "LEGI",
+   "etat": "VIGUEUR",
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": "1804-03-21T00:00:00.000+0000",
+   "sections": [
+    {
+     "id": "LEGISCTA000006117610",
+     "title": "Titre Ier : Des droits civils",
+     "dateVersion": "1970-07-19T00:00:00.000+0000",
+     "legalStatus": "VIGUEUR",
+     "extracts": [
+      {
+       "id": "LEGIARTI000006419288",
+       "title": "9",
+       "legalStatus": "VIGUEUR",
+       "dateVersion": "1970-07-19T00:00:00.000+0000",
+       "dateDebut": "1970-07-19T00:00:00.000+0000",
+       "dateFin": "2999-01-01T00:00:00.000+0000",
+       "searchFieldName": null,
+       "num": "9",
+       "values": [
+        "[...]Chacun a droit au respect de sa vie privÃ©e. Les juges peuvent, sans prÃ©judice de la rÃ©paration [...]"
+       ],
+       "type": "articles"
+      }
+     ]
+    }
+   ],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": "2999-01-01T00:00:00.000+0000",
+   "dossiersLegislatifs": [],
+   "nor": null,
+   "motsCles": [],
+   "appellations": [],
+   "idAttachment": null,
+   "sizeAttachment": null,
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": null,
+   "idcc": null,
+   "descriptionFusionHtml": null,
+   "dateSignature": null,
+   "dateDiffusion": null,
+   "reference": null,
+   "themes": [],
+   "conforme": false,
+   "resumePrincipal": [],
+   "autreResume": []
+  }
+ ],
+ "totalResultNumber": 1,
+ "totalArticleResultNumber": 1,
+ "typePagination": "ARTICLE",
+ "descriptionFusionHtml": null
+}

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "fr-eli-mcp": {
+      "command": "fr-eli-mcp",
+      "env": {
+        "FR_ELI_ENV": "sandbox",
+        "FR_ELI_OAUTH_URL": "https://sandbox-oauth.piste.gouv.fr/api/oauth/token",
+        "FR_ELI_BASE_URL": "https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app",
+        "FR_ELI_CLIENT_ID": "REPLACE_WITH_YOUR_PISTE_CLIENT_ID",
+        "FR_ELI_CLIENT_SECRET": "REPLACE_WITH_YOUR_PISTE_CLIENT_SECRET",
+        "FR_ELI_CACHE_DIR": "~/.matematic/cache/fr-eli",
+        "FR_ELI_AUDIT_DIR": "~/.matematic/audit"
+      }
+    }
+  }
+}

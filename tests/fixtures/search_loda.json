@@ -1,0 +1,164 @@
+{
+ "executionTime": 48,
+ "results": [
+  {
+   "titles": [
+    {
+     "id": "LEGITEXT000033205014_08-09-2023",
+     "cid": "JORFTEXT000033202746",
+     "title": "LOI nÂ° 2016-1321 du 7 octobre 2016 pour une <mark>RÃ©publique</mark> <mark>numÃ©rique</mark> (1)",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": null,
+   "type": "data_legi",
+   "nature": "LOI",
+   "origin": "LEGI",
+   "etat": "VIGUEUR",
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": "2016-10-09T00:00:00.000+0000",
+   "sections": [],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": "2016-10-08T00:00:00.000+0000",
+   "nor": "ECFI1524250L",
+   "motsCles": [],
+   "appellations": [
+    "loi Lemaire",
+    "loi numÃ©rique",
+    "loi Lemaire [2016]"
+   ],
+   "idAttachment": null,
+   "sizeAttachment": null,
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": null,
+   "idcc": null,
+   "descriptionFusionHtml": null,
+   "dateSignature": null,
+   "dateDiffusion": null,
+   "reference": null,
+   "themes": [],
+   "conforme": false,
+   "resumePrincipal": [],
+   "autreResume": []
+  },
+  {
+   "titles": [
+    {
+     "id": "LEGITEXT000033696785_28-12-2016",
+     "cid": "JORFTEXT000033691882",
+     "title": "DÃ©cret nÂ° 2016-1849 du 23 dÃ©cembre 2016 relatif Ã  la carte mobilitÃ© inclusion pris en application de l'article 107 de la loi nÂ° 2016-1321 du 7 octobre 2016 pour une <mark>RÃ©publique</mark> <mark>numÃ©rique</mark> et en application de l'article 2 de la loi nÂ° 93-1419 du 31 dÃ©cembre 1993 relative Ã  l'Imprimerie nationale",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": null,
+   "type": "data_legi",
+   "nature": "DECRET",
+   "origin": "LEGI",
+   "etat": "VIGUEUR",
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": "2016-12-28T00:00:00.000+0000",
+   "sections": [],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": "2016-12-27T00:00:00.000+0000",
+   "nor": "AFSA1629022D",
+   "motsCles": [],
+   "appellations": [],
+   "idAttachment": null,
+   "sizeAttachment": null,
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": null,
+   "idcc": null,
+   "descriptionFusionHtml": null,
+   "dateSignature": null,
+   "dateDiffusion": null,
+   "reference": null,
+   "themes": [],
+   "conforme": false,
+   "resumePrincipal": [],
+   "autreResume": []
+  }
+ ],
+ "facets": [
+  {
+   "facetElem": "FOND",
+   "field": "origine",
+   "values": {
+    "ACCO": 387700,
+    "CETAT": 568513,
+    "CIRC": 10647,
+    "CNIL": 26726,
+    "CODE": 76,
+    "CONSTIT": 7372,
+    "JORF": 1124619,
+    "JUFI": 3502,
+    "JURI": 605338,
+    "KALI": 21820,
+    "LEGI": 116869
+   },
+   "childs": {},
+   "totalElement": 0
+  },
+  {
+   "facetElem": "NATURE",
+   "field": "nature",
+   "values": {
+    "ARRETE": 395,
+    "DECLARATION": 0,
+    "DECISION": 1,
+    "LOI": 291,
+    "ORDONNANCE": 15,
+    "DECRET": 1084,
+    "DECRET_LOI": 0,
+    "CONVENTION": 0,
+    "CONSTITUTION": 0,
+    "DELIBERATION": 0,
+    "ACCORD_FONCTION_PUBLIQUE": 0
+   },
+   "childs": {},
+   "totalElement": 0
+  },
+  {
+   "facetElem": "ARTICLE_LEGAL_STATUS",
+   "field": "articles.etat",
+   "values": {
+    "ABROGE": 0,
+    "ABROGE_DIFF": 0,
+    "ANNULE": 0,
+    "DENONCE": 0,
+    "DISJOINT": 0,
+    "INITIALE": 0,
+    "MODIFIE": 0,
+    "MODIFIE_MORT_NE": 0,
+    "PERIME": 0,
+    "REMPLACE": 0,
+    "SANS_ETAT": 0,
+    "SUBSTITUE": 0,
+    "TRANSFERE": 0,
+    "VIGUEUR": 7623,
+    "VIGUEUR_DIFF": 0,
+    "VIGUEUR_ETEN": 0,
+    "VIGUEUR_NON_ETEN": 0
+   },
+   "childs": {},
+   "totalElement": 7623
+  }
+ ],
+ "totalResultNumber": 1786,
+ "totalArticleResultNumber": 0,
+ "typePagination": "DEFAUT",
+ "descriptionFusionHtml": null
+}

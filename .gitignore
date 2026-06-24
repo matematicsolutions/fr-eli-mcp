@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets / local config (NEVER source) - PISTE OAuth credentials live here
+.env
+.mcp.json
+
+# Local runtime (never source)
+.matematic/
+*.log
+
+# Live API probe scratch (raw dumps - not part of the package)
+_probe/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Note: tests/fixtures/* ARE committed - public Legifrance data needed for offline tests.

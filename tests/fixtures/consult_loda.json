@@ -1,0 +1,533 @@
+{
+ "executionTime": 33,
+ "dereferenced": false,
+ "id": "LEGITEXT000033205014_08-09-2023",
+ "idConteneur": null,
+ "cid": "JORFTEXT000033202746",
+ "title": "LOI nÂ° 2016-1321 du 7 octobre 2016 pour une RÃ©publique numÃ©rique (1)",
+ "nor": "ECFI1524250L",
+ "eli": null,
+ "alias": null,
+ "jorfText": "JORF nÂ°0235 du 8 octobre 2016",
+ "jurisState": "Vigueur",
+ "modifDate": "2023-09-08",
+ "jurisDate": "2016-10-09",
+ "dateDebutVersion": "2023-09-08",
+ "dateFinVersion": "2999-01-01",
+ "dateParution": 1475884800000,
+ "dateTexte": null,
+ "numParution": "0235",
+ "inap": null,
+ "textNumber": null,
+ "textAbroge": false,
+ "etat": null,
+ "nature": "LOI",
+ "resume": null,
+ "rectificatif": null,
+ "motsCles": [],
+ "appellations": [
+  "loi Lemaire",
+  "loi numÃ©rique",
+  "loi Lemaire [2016]"
+ ],
+ "sections": [
+  {
+   "id": "LEGISCTA000033205040",
+   "title": "Titre Ier : LA CIRCULATION DES DONNÃES ET DU SAVOIR",
+   "articles": [],
+   "sections": [
+    {
+     "id": "LEGISCTA000033205015",
+     "title": "Chapitre Ier : Economie de la donnÃ©e",
+     "articles": [],
+     "sections": [
+      {
+       "id": "LEGISCTA000033205022",
+       "title": "Section 1 : Ouverture de l'accÃ¨s aux donnÃ©es publiques",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205126",
+         "num": "1",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205128",
+         "num": "2",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205130",
+         "num": "3",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205132",
+         "num": "4",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205062",
+         "num": "5",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205023",
+       "title": "Section 2 : DonnÃ©es d'intÃ©rÃªt gÃ©nÃ©ral",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205150",
+         "num": "17",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205152",
+         "num": "18",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205154",
+         "num": "19",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205070",
+         "num": "20",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205156",
+         "num": "21",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205024",
+       "title": "Section 3 : Gouvernance",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205164",
+         "num": "25",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205094",
+         "num": "26",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205166",
+         "num": "27",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205168",
+         "num": "28",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205170",
+         "num": "29",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      }
+     ]
+    },
+    {
+     "id": "LEGISCTA000033205016",
+     "title": "Chapitre II : Economie du savoir",
+     "articles": [
+      {
+       "id": "LEGIARTI000033205102",
+       "num": "30",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205104",
+       "num": "31",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205106",
+       "num": "32",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205108",
+       "num": "33",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205110",
+       "num": "34",
+       "etat": "VIGUEUR"
+      }
+     ],
+     "sections": []
+    }
+   ]
+  },
+  {
+   "id": "LEGISCTA000033205041",
+   "title": "Titre II : LA PROTECTION DES DROITS DANS LA SOCIÃTÃ NUMÃRIQUE",
+   "articles": [],
+   "sections": [
+    {
+     "id": "LEGISCTA000033205017",
+     "title": "Chapitre Ier : Environnement ouvert",
+     "articles": [],
+     "sections": [
+      {
+       "id": "LEGISCTA000033205025",
+       "title": "Section 1 : NeutralitÃ© de l'internet",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205172",
+         "num": "40",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205072",
+         "num": "41",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205176",
+         "num": "43",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205178",
+         "num": "44",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205180",
+         "num": "45",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205026",
+       "title": "Section 2 : PortabilitÃ© et rÃ©cupÃ©ration des donnÃ©es",
+       "articles": [
+        {
+         "id": "LEGIARTI000037090483",
+         "num": "48",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205027",
+       "title": "Section 3 : LoyautÃ© des plateformes et information des consommateurs",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205188",
+         "num": "49",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205190",
+         "num": "50",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205192",
+         "num": "51",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205194",
+         "num": "52",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205196",
+         "num": "53",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      }
+     ]
+    },
+    {
+     "id": "LEGISCTA000033205018",
+     "title": "Chapitre II : Protection de la vie privÃ©e en ligne",
+     "articles": [],
+     "sections": [
+      {
+       "id": "LEGISCTA000033205028",
+       "title": "Section 1 : Protection des donnÃ©es Ã  caractÃ¨re personnel",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205074",
+         "num": "54",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205076",
+         "num": "55",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205198",
+         "num": "56",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205078",
+         "num": "57",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205200",
+         "num": "58",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205029",
+       "title": "Section 2 : ConfidentialitÃ© des correspondances Ã©lectroniques privÃ©es",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205218",
+         "num": "68",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "LEGISCTA000033205042",
+   "title": "Titre III : L'ACCÃS AU NUMÃRIQUE",
+   "articles": [],
+   "sections": [
+    {
+     "id": "LEGISCTA000033205019",
+     "title": "Chapitre Ier : NumÃ©rique et territoires",
+     "articles": [],
+     "sections": [
+      {
+       "id": "LEGISCTA000033205030",
+       "title": "Section 1 : CompÃ©tences et organisation",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205220",
+         "num": "69",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205082",
+         "num": "70",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205222",
+         "num": "71",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205031",
+       "title": "Section 2 : Couverture numÃ©rique",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205084",
+         "num": "72",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205224",
+         "num": "73",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205226",
+         "num": "74",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205228",
+         "num": "75",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205230",
+         "num": "76",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      }
+     ]
+    },
+    {
+     "id": "LEGISCTA000033205020",
+     "title": "Chapitre II : Facilitation des usages",
+     "articles": [
+      {
+       "id": "LEGIARTI000033205118",
+       "num": "86",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205120",
+       "num": "87",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205122",
+       "num": "88",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205058",
+       "num": "89",
+       "etat": "VIGUEUR"
+      },
+      {
+       "id": "LEGIARTI000033205092",
+       "num": "90",
+       "etat": "VIGUEUR"
+      }
+     ],
+     "sections": [
+      {
+       "id": "LEGISCTA000033205032",
+       "title": "Section 1 : RecommandÃ© Ã©lectronique",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205240",
+         "num": "93",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205033",
+       "title": "Section 2 : Fourniture de services de paiement dans le cadre de l'exclusion de demande d'agrÃ©ment applicable Ã  certains instruments de paiement",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205242",
+         "num": "94",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205034",
+       "title": "Section 3 : RÃ©gulation des jeux en ligne",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205244",
+         "num": "95",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205090",
+         "num": "96",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205246",
+         "num": "97",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205248",
+         "num": "98",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205250",
+         "num": "99",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      }
+     ]
+    },
+    {
+     "id": "LEGISCTA000033205021",
+     "title": "Chapitre III : AccÃ¨s des publics fragiles au numÃ©rique",
+     "articles": [],
+     "sections": [
+      {
+       "id": "LEGISCTA000033205037",
+       "title": "Section 1 : AccÃ¨s des personnes handicapÃ©es aux services tÃ©lÃ©phoniques",
+       "articles": [
+        {
+         "id": "LEGIARTI000048050251",
+         "num": "105",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205038",
+       "title": "Section 2 : AccÃ¨s des personnes handicapÃ©es aux sites internet publics",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205262",
+         "num": "106",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205264",
+         "num": "107",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      },
+      {
+       "id": "LEGISCTA000033205039",
+       "title": "Section 3 : Maintien de la connexion Ã  internet",
+       "articles": [
+        {
+         "id": "LEGIARTI000033205266",
+         "num": "108",
+         "etat": "VIGUEUR"
+        },
+        {
+         "id": "LEGIARTI000033205268",
+         "num": "109",
+         "etat": "VIGUEUR"
+        }
+       ],
+       "sections": []
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "articles": [],
+ "pagePdf": null,
+ "fileName": null,
+ "fileSize": null,
+ "filePath": null
+}
