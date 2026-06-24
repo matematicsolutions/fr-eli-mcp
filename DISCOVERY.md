@@ -1,4 +1,4 @@
-# Discovery — fr-eli-mcp (Legifrance via PISTE)
+# Discovery - fr-eli-mcp (Legifrance via PISTE)
 
 Date: 2026-06-24. Decision: **BUILD** (sandbox fully working: token + subscription + live data).
 
@@ -19,19 +19,19 @@ portal; it was completed before this build. The connector itself is fully autono
 
 All endpoints are `POST` JSON under the base, with a `Bearer` token.
 
-- `POST /search` — `{fond, recherche:{champs[…], filtres[…], pageNumber, pageSize, operateur, sort,
+- `POST /search` - `{fond, recherche:{champs[…], filtres[…], pageNumber, pageSize, operateur, sort,
   typePagination}}`. Verified for `fond` ∈ {`LODA_DATE`, `CODE_DATE`, `JURI`}. `LODA_DATE` /
   `CODE_DATE` require a `DATE_VERSION` `singleDate` (epoch ms) filter. Results:
   `results[].titles[]{id, cid, title}` + `nature` / `origin` / `etat`; `CODE_DATE` results also
   carry `sections[].extracts[]{id (LEGIARTI…), num, values}`.
-- `POST /consult/lawDecree` — `{textId (LEGITEXT…), date (YYYY-MM-DD)}` → full LODA text with
+- `POST /consult/lawDecree` - `{textId (LEGITEXT…), date (YYYY-MM-DD)}` → full LODA text with
   `id`, `cid` (JORFTEXT…), `title`, `nor`, `nature`, `dateParution`, nested `sections[].articles[]`.
-- `POST /consult/getArticle` — `{id (LEGIARTI…)}` → `article{id, num, texte, etat, dateDebut,
+- `POST /consult/getArticle` - `{id (LEGIARTI…)}` → `article{id, num, texte, etat, dateDebut,
   textTitles[] (carries the code title, e.g. "Code civil"), fullSectionsTitre}`.
-- `POST /consult/juri` — `{textId (JURITEXT…)}` → `text{id, ecli, juridiction, formation, solution,
+- `POST /consult/juri` - `{textId (JURITEXT…)}` → `text{id, ecli, juridiction, formation, solution,
   numeroAffaire, dateTexte, titre, texte}`.
 
-### Key finding — ELI is null, ECLI is native
+### Key finding - ELI is null, ECLI is native
 
 For LODA texts and code articles the API returns `eli` / `idEli` / `idEliAlias` **null**, and there
 are no `/eli/…` strings anywhere in the consult payloads. The act number ("2016-1321") and signature
@@ -50,11 +50,11 @@ source API.
 | `eli_uri` | `https://www.legifrance.gouv.fr/loda/id/{LEGITEXT}` / `…/codes/article_lc/{LEGIARTI}` (resolvable, CID-keyed; **not** a native ELI) | `https://www.legifrance.gouv.fr/juri/id/{JURITEXT}` |
 | `human_readable_citation` | the `title` prose ("LOI n° … du …") / "Code civil, art. 9" | the decision `titre` |
 | `source_url` | same legifrance.gouv.fr page | same |
-| `ecli` | — | native `text.ecli` |
+| `ecli` | - | native `text.ecli` |
 
 ## Build
 
-3 reuse-verbatim modules (`audit.py`, `cache.py` — env `FR_ELI_*`, log `fr-eli-mcp.jsonl`), and the
+3 reuse-verbatim modules (`audit.py`, `cache.py` - env `FR_ELI_*`, log `fr-eli-mcp.jsonl`), and the
 FR-specific `client.py` (OAuth2 + in-memory token cache + 401 refresh + POST JSON), `citations.py`,
 `models.py`, `server.py` (4 tools, `ToolError` {invalid_arg / not_found / upstream_error /
 config_error}). Tests: offline drift + offline fixture parse + live smoke. The factory holds: the

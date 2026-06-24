@@ -1,13 +1,12 @@
 # fr-eli-mcp
 
-An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr) — search
-French legislation (LODA laws & decrees, codes) and case law (JURI), and fetch verbatim text with
+An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr). It searches
+French legislation (LODA laws & decrees, codes) and case law (JURI), and returns verbatim text with
 verifiable citations. Part of the **eu-legal-mcp** line of national legal connectors by
 [MateMatic](https://matematic.co).
 
 Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation`
-(French convention) and a resolvable `source_url`. Court decisions additionally carry a **native
-ECLI**.
+(French convention) and a resolvable `source_url`.
 
 > **Read-only.** The server only queries Legifrance and writes a local audit log. It never modifies
 > official text and never sends anything beyond your query / document id.
@@ -24,8 +23,8 @@ ECLI**.
 ### A note on ELI vs ECLI
 
 France has an official ELI scheme, but the PISTE `lf-engine-app` **consult API returns the native
-ELI field `null` for the legislation we tested**. Following this line's rule — *say what you do not
-have, never fabricate an ELI* — `eli_uri` carries the **stable, resolvable Legifrance resource URL**
+ELI field `null` for the legislation we tested**. Following this line's rule - *say what you do not
+have, never fabricate an ELI* - `eli_uri` carries the **stable, resolvable Legifrance resource URL**
 (CID-keyed), not a `/eli/...` string parsed from prose. Each response repeats this in `eli_note`.
 
 Case law is different: the API returns a **native, authoritative ECLI**

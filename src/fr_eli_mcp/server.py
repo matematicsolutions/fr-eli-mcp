@@ -55,7 +55,7 @@ Tools return a structured error with a `[code]` prefix:
 
 ## Response style
 
-- Cite legislation as `human_readable_citation` with the `source_url`: "LOI n 2016-1321 du 7 octobre 2016, https://www.legifrance.gouv.fr/loda/id/LEGITEXT000033205014".
+- Cite legislation as `human_readable_citation` with the `source_url`: "LOI n° 2016-1321 du 7 octobre 2016, https://www.legifrance.gouv.fr/loda/id/LEGITEXT000033205014".
 - Cite case law with its `ecli` and `source_url`.
 - NEVER invent an id, an ELI, an ECLI or a citation - take each from the tool output.
 """
