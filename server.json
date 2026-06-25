@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.matematicsolutions/fr-eli-mcp",
+  "description": "MCP server for French Legifrance (PISTE): legislation and case law with citations and ECLI.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/matematicsolutions/fr-eli-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "fr-eli-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

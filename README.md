@@ -1,5 +1,7 @@
 # fr-eli-mcp
 
+<!-- mcp-name: io.github.matematicsolutions/fr-eli-mcp -->
+
 An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr). It searches
 French legislation (LODA laws & decrees, codes) and case law (JURI), and returns verbatim text with
 verifiable citations. Part of the **eu-legal-mcp** line of national legal connectors by
