@@ -2,6 +2,25 @@
 
 <!-- mcp-name: io.github.matematicsolutions/fr-eli-mcp -->
 
+
+## Instalacja (jedna komenda)
+
+Opublikowany na PyPI + MCP Registry (`io.github.matematicsolutions/fr-eli-mcp`). Uruchomienie bez klonowania:
+
+```bash
+uvx fr-eli-mcp
+```
+
+Wymaga kluczy PISTE w env: `PISTE_CLIENT_ID`, `PISTE_CLIENT_SECRET` (Legifrance/PISTE).
+
+Konfiguracja klienta MCP (stdio):
+
+```json
+{ "mcpServers": { "fr-eli-mcp": { "command": "uvx", "args": ["fr-eli-mcp"] } } }
+```
+
+(Budowanie ze źródeł — niżej.)
+
 An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr). It searches
 French legislation (LODA laws & decrees, codes) and case law (JURI), and returns verbatim text with
 verifiable citations. Part of the **eu-legal-mcp** line of national legal connectors by
