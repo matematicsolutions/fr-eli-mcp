@@ -13,6 +13,14 @@ IMPORTANT - ELI vs ECLI on Legifrance:
   resolves), NOT a synthesized ``/eli/...`` string parsed from prose.
 - **Case law (JURI):** the API DOES return a native, authoritative ``ecli`` (e.g.
   ``ECLI:FR:CCASS:2025:C100399``). We surface it verbatim in a dedicated ``ecli`` field.
+- **Conseil constitutionnel (CONSTIT):** same ``consult/juri`` endpoint, ``CONSTEXT...`` ids.
+  Native ``ecli`` (e.g. ``ECLI:FR:CC:2025:2025.1173.QPC``); the decision ``titre`` already is
+  the French citation convention ("Décision n° 2025-1173 QPC du 7 novembre 2025 - ...").
+- **Administrative courts (CETAT):** same ``consult/juri`` endpoint, ``CETATEXT...`` ids. Covers
+  Conseil d'Etat, cours administratives d'appel (CAA) and tribunaux administratifs (TA). Conseil
+  d'Etat decisions carry a native ``ecli`` (e.g. ``ECLI:FR:CECHR:2026:506507.20260529``); CAA/TA
+  coverage is uneven and ``ecli`` is frequently ``None`` - never fabricate one when absent, cite
+  the decision's ``titre`` (court, formation, date, dossier number) and ``source_url`` instead.
 """
 
 from __future__ import annotations
@@ -68,6 +76,10 @@ def legifrance_url(identifier: str | None, kind: str) -> str | None:
             return f"{WEB_BASE}/codes/article_lc/{identifier}"
         case "juri":
             return f"{WEB_BASE}/juri/id/{identifier}"
+        case "constit":
+            return f"{WEB_BASE}/cons/id/{identifier}"
+        case "cetat":
+            return f"{WEB_BASE}/ceta/id/{identifier}"
         case "jorf":
             return f"{WEB_BASE}/jorf/id/{identifier}"
         case _:
@@ -96,7 +108,13 @@ def normalize_search_hit(result: dict[str, Any], fond: str) -> dict[str, Any]:
         "human_readable_citation": title,
     }
 
-    if fond.startswith("JURI"):
+    if fond == "CONSTIT":
+        out["kind"] = "constit"
+        url = legifrance_url(cid or text_id, "constit")
+    elif fond == "CETAT":
+        out["kind"] = "cetat"
+        url = legifrance_url(cid or text_id, "cetat")
+    elif fond.startswith("JURI"):
         out["kind"] = "juri"
         url = legifrance_url(cid or text_id, "juri")
     elif fond.startswith("CODE"):
@@ -228,17 +246,67 @@ def normalize_article(payload: dict[str, Any]) -> dict[str, Any] | None:
 
 
 # ---------------------------------------------------------------------------
-# Consult: JURI decision (native ECLI)
+# Consult: JURI / CONSTIT / CETAT decision (native ECLI, shared endpoint)
 # ---------------------------------------------------------------------------
+
+_FR_MONTHS = (
+    "janvier", "fevrier", "mars", "avril", "mai", "juin",
+    "juillet", "aout", "septembre", "octobre", "novembre", "decembre",
+)
+
+
+def _fr_date(ms: Any) -> str | None:
+    """Epoch milliseconds -> ``D mois AAAA`` (French prose date, no leading zero)."""
+    date_str = ms_to_date(ms)
+    if not date_str:
+        return None
+    year, month, day = date_str.split("-")
+    return f"{int(day)} {_FR_MONTHS[int(month) - 1]} {year}"
+
+
+def _constit_citation(text: dict[str, Any]) -> str | None:
+    """French citation convention for a Conseil constitutionnel decision.
+
+    ``Cons. const., decision n DEC-CIB NATURE du DD mois AAAA[ - objet]``
+    e.g. "Cons. const., decision n 2025-1173 QPC du 7 novembre 2025 - [...]".
+    """
+    num = text.get("num")
+    nature = (text.get("nature") or "").upper()  # "QPC" | "DC" | ...
+    date_prose = _fr_date(text.get("dateTexte"))
+    if not (num and date_prose):
+        return None
+    head = f"Cons. const., decision n° {num}"
+    if nature:
+        head += f" {nature}"
+    head += f" du {date_prose}"
+    titre = text.get("titre") or ""
+    # Pull the bracketed case name out of the titre if present, e.g. "[...]" after the date.
+    match = re.search(r"\[(.+?)\]", titre)
+    if match:
+        head += f" - {match.group(1)}"
+    return head
 
 
 def normalize_juri(payload: dict[str, Any]) -> dict[str, Any] | None:
-    """Normalize a ``/consult/juri`` response. JURI carries a native authoritative ECLI."""
+    """Normalize a ``/consult/juri`` response.
+
+    Shared across three origins - Cour de cassation / cours d'appel (``JURI``), the Conseil
+    constitutionnel (``CONSTIT``, ``CONSTEXT...`` ids) and the administrative courts (``CETAT``,
+    ``CETATEXT...`` ids, covering Conseil d'Etat / CAA / TA). All three carry a native,
+    authoritative ``ecli`` on this endpoint.
+    """
     text = payload.get("text")
     if not text or not text.get("id"):
         return None
     decision_id = text.get("id")
-    url = legifrance_url(decision_id, "juri")
+    origine = (text.get("origine") or "").upper()
+    url_kind = "constit" if origine == "CONSTIT" else "cetat" if origine == "CETAT" else "juri"
+    url = legifrance_url(decision_id, url_kind)
+
+    citation = text.get("titre")
+    if origine == "CONSTIT":
+        citation = _constit_citation(text) or citation
+
     return {
         "decision_id": decision_id,
         "ecli": text.get("ecli"),
@@ -250,7 +318,7 @@ def normalize_juri(payload: dict[str, Any]) -> dict[str, Any] | None:
         "nature": text.get("nature"),
         "title": text.get("titre"),
         "text": text.get("texte"),
-        "human_readable_citation": text.get("titre"),
+        "human_readable_citation": citation,
         "source_url": url,
         "eli_uri": url,
     }

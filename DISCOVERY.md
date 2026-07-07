@@ -59,3 +59,42 @@ FR-specific `client.py` (OAuth2 + in-memory token cache + 401 refresh + POST JSO
 `models.py`, `server.py` (4 tools, `ToolError` {invalid_arg / not_found / upstream_error /
 config_error}). Tests: offline drift + offline fixture parse + live smoke. The factory holds: the
 infrastructure is reused, only the source adapter is new.
+
+## Update 2026-07-07 - Conseil constitutionnel + administrative courts (v0.2.0)
+
+Audit against Legal Data Hunter (`worldwidelaw/legal-sources` manifest, `status: complete`) flagged
+two French judicial gaps not covered by v0.1.0: `FR/ConseilConstitutionnel` and `FR/CouncilState`
+(Conseil d'Etat, CAA, TA). A third candidate, `FR/Judilibre`, was also evaluated.
+
+**Probed live on the same PISTE sandbox credentials already held by this connector** (no new
+subscription):
+
+- `POST /search {fond: "CONSTIT"}` - **200 OK**, 7 372 Conseil constitutionnel decisions indexed
+  (QPC + DC + LP + RIP), native facets for `NATURE_CONSTIT` / `SOLUTION_CONSTIT`. Hit ids are
+  `CONSTEXT...`.
+- `POST /search {fond: "CETAT"}` - **200 OK**, 569 270 administrative decisions (Conseil d'Etat +
+  CAA + TA + Tribunal des conflits), facet `JURIDICTION_NATURE` confirms all three court tiers.
+  Hit ids are `CETATEXT...`.
+- `POST /consult/juri {textId: "CONSTEXT..."}` and `{textId: "CETATEXT..."}` - **both 200 OK on the
+  existing generic endpoint**, no new consult route needed. Both return a native `ecli`
+  (`ECLI:FR:CC:...` for Conseil constitutionnel; `ECLI:FR:CECHR:...` for Conseil d'Etat). CAA/TA
+  decisions frequently have `ecli: null` (confirmed live - a CAA de Marseille hit had no ECLI while
+  a same-page Conseil d'Etat hit did) - never fabricated, left `None`.
+- **Web URL patterns verified independently** (WebSearch, since direct `httpx` GETs to
+  `legifrance.gouv.fr` 403 from this environment regardless of path - a general bot-block, not
+  path-specific): `https://www.legifrance.gouv.fr/cons/id/CONSTEXT...` and
+  `.../ceta/id/CETATEXT...` both resolve to real decision pages in third-party search results and
+  WebFetch. (Guessed `/constit/id/...` first - wrong; confirmed via search before shipping, per the
+  "never fabricate a citation path" rule.)
+- **Judilibre** (`api.piste.gouv.fr/cassation/judilibre`) - `403 Forbidden` on the sandbox
+  `/healthcheck` even with a valid Legifrance bearer token -> requires its **own** PISTE API
+  subscription, separate from the Legifrance one. Not integrated this round; `JURI` already covers
+  Cour de cassation case law via the existing subscription, so this isn't a hard gap, just a
+  possible future upgrade path (better structuring, per LDH's `preferred_for: caselaw`).
+
+**Decision: extend, not fork.** Both new fonds route through the *existing* `_FOND_MAP` /
+`consult_juri` / `normalize_juri` machinery in `citations.py` + `server.py` - the only genuinely
+new logic is a French-convention citation builder for Conseil constitutionnel
+(`Cons. const., decision n° NNNN-NNN QPC du D mois AAAA - [case]`) and the `cons`/`ceta` URL kinds
+in `legifrance_url()`. `fr_get_decision` now accepts `JURITEXT...` / `CONSTEXT...` / `CETATEXT...`
+ids uniformly. No new client module, no new credentials, no new dependency.

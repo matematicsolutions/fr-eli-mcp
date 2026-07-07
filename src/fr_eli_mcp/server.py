@@ -28,19 +28,19 @@ from .client import CredentialsError, LegifranceClient
 from .models import Act, ArticleText, Decision, SearchResult
 
 INSTRUCTIONS = """\
-This MCP server exposes the French Legifrance API through PISTE (piste.gouv.fr). It covers consolidated legislation (LODA laws & decrees, and codes) and case law (JURI). Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation` (French convention) and a `source_url` (a resolvable legifrance.gouv.fr page).
+This MCP server exposes the French Legifrance API through PISTE (piste.gouv.fr). It covers consolidated legislation (LODA laws & decrees, and codes) and case law from three jurisdictions: Cour de cassation / cours d'appel (JURI), the Conseil constitutionnel (CONSTIT - QPC/DC decisions), and the administrative courts (CETAT - Conseil d'Etat, cours administratives d'appel, tribunaux administratifs). Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation` (French convention) and a `source_url` (a resolvable legifrance.gouv.fr page).
 
 ## Call order
 
-1. `fr_search` - keyword search a `fond` (`LODA` laws/decrees, `CODE` codes, `JURI` case law). Each hit carries `id`, `title`, `human_readable_citation`, `source_url`. For `CODE` hits, matched `articles` carry their `article_id`.
+1. `fr_search` - keyword search a `fond` (`LODA` laws/decrees, `CODE` codes, `JURI` Cour de cassation case law, `CONSTIT` Conseil constitutionnel decisions, `CETAT` administrative case law). Each hit carries `id`, `title`, `human_readable_citation`, `source_url`. For `CODE` hits, matched `articles` carry their `article_id`.
 2. `fr_get_act` - consult a LODA law/decree by its `text_id` (a `LEGITEXT...` id). Returns metadata, citation and a table of contents (`articles` with their `article_id` + `num`).
 3. `fr_get_text` - the verbatim text of a single article by `article_id` (a `LEGIARTI...` id).
-4. `fr_get_decision` - a JURI court decision by `decision_id` (a `JURITEXT...` id). Returns the native `ecli`, court, formation, solution and the decision text.
+4. `fr_get_decision` - a court decision by `decision_id` (a `JURITEXT...`, `CONSTEXT...` or `CETATEXT...` id, from `fr_search` on fond `JURI`, `CONSTIT` or `CETAT`). Returns the native `ecli`, court, formation, solution and the decision text.
 
 ## Hard constraints
 
 - **ELI on Legifrance:** the PISTE consult API returns the native ELI field *null* for legislation. `eli_uri` therefore carries the stable resolvable Legifrance resource URL - it is NOT a fabricated `/eli/...` string. Read `eli_note` and relay it; never invent an ELI.
-- **ECLI is real for case law** - `fr_get_decision` returns a native authoritative `ecli` (e.g. `ECLI:FR:CCASS:2025:C100399`). Cite it verbatim.
+- **ECLI is real for case law, but not always populated** - `fr_get_decision` returns a native authoritative `ecli` for Cour de cassation (e.g. `ECLI:FR:CCASS:2025:C100399`), Conseil constitutionnel (e.g. `ECLI:FR:CC:2025:2025.1173.QPC`) and Conseil d'Etat (e.g. `ECLI:FR:CECHR:2026:506507.20260529`). Cite it verbatim when present. CAA/TA decisions under fond `CETAT` frequently have `ecli=null` - never fabricate one; cite `human_readable_citation` + `source_url` instead.
 - **Every response has `human_readable_citation` + `source_url`** - cite both to the user.
 - **No modification of official text** - articles and decisions are returned verbatim from Legifrance.
 - **Audit log JSONL** - every tool call appends to `~/.matematic/audit/fr-eli-mcp.jsonl`.
@@ -83,7 +83,16 @@ READ_ONLY = ToolAnnotations(
 mcp: FastMCP = FastMCP(name="fr-eli-mcp", instructions=INSTRUCTIONS)
 
 # User-facing fond -> API fond.
-_FOND_MAP = {"LODA": "LODA_DATE", "CODE": "CODE_DATE", "JURI": "JURI"}
+_FOND_MAP = {
+    "LODA": "LODA_DATE",
+    "CODE": "CODE_DATE",
+    "JURI": "JURI",
+    "CONSTIT": "CONSTIT",
+    "CETAT": "CETAT",
+}
+
+# decision_id prefix -> which fonds' consult/juri endpoint can resolve it.
+_DECISION_PREFIXES = ("JURITEXT", "CONSTEXT", "CETATEXT")
 
 
 def _audit() -> AuditLogger:
@@ -159,7 +168,10 @@ async def fr_search(query: str, fond: str = "LODA", page_size: int = 10) -> Sear
 
     Args:
         query: free-text query (e.g. "republique numerique", "responsabilite").
-        fond: one of ``LODA`` (laws & decrees), ``CODE`` (codes), ``JURI`` (case law).
+        fond: one of ``LODA`` (laws & decrees), ``CODE`` (codes), ``JURI`` (Cour de cassation
+            case law), ``CONSTIT`` (Conseil constitutionnel - QPC/DC decisions), ``CETAT``
+            (administrative case law: Conseil d'Etat, cours administratives d'appel, tribunaux
+            administratifs).
         page_size: number of hits (1..100).
 
     Returns:
@@ -287,16 +299,29 @@ async def fr_get_text(article_id: str) -> ArticleText:
 
 @mcp.tool(annotations=READ_ONLY)
 async def fr_get_decision(decision_id: str) -> Decision:
-    """Consult a JURI court decision by its ``JURITEXT...`` id (returns the native ECLI).
+    """Consult a court decision by its id (returns the native ECLI).
+
+    Covers three jurisdictions via the same Legifrance ``consult/juri`` endpoint:
+
+    - ``JURITEXT...`` - Cour de cassation / cours d'appel (fond ``JURI``).
+    - ``CONSTEXT...`` - Conseil constitutionnel QPC/DC decisions (fond ``CONSTIT``).
+    - ``CETATEXT...`` - Conseil d'Etat, CAA, TA administrative case law (fond ``CETAT``).
 
     Args:
-        decision_id: a ``JURITEXT...`` identifier (from ``fr_search`` on fond ``JURI``).
+        decision_id: a ``JURITEXT...``, ``CONSTEXT...`` or ``CETATEXT...`` identifier (from
+            ``fr_search`` on fond ``JURI``, ``CONSTIT`` or ``CETAT`` respectively).
 
     Returns:
         ``Decision`` with ``ecli``, court, formation, solution and the decision ``text``.
     """
     audit = _audit()
-    _require_prefix(decision_id, "JURITEXT", "decision_id")
+    if not decision_id or not decision_id.strip():
+        raise ToolError("invalid_arg", "decision_id is required.")
+    if not decision_id.startswith(_DECISION_PREFIXES):
+        raise ToolError(
+            "invalid_arg",
+            f"decision_id={decision_id!r} must start with one of {_DECISION_PREFIXES}.",
+        )
     input_hash = hash_input({"decision_id": decision_id})
 
     with timer() as t:

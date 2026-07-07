@@ -1,0 +1,288 @@
+{
+  "executionTime": 50,
+  "results": [
+    {
+      "titles": [
+        {
+          "id": "CONSTEXT000043596386",
+          "cid": "CONSTEXT000043596386",
+          "title": "Décision 2021-817 DC - 20 mai 2021 - Loi pour une sécurité globale préservant les <mark>libertés</mark>  - Non conformité partielle - réserve",
+          "legalStatus": null,
+          "startDate": null,
+          "endDate": null,
+          "nature": null
+        }
+      ],
+      "text": "[...] Parmi ces droits et <mark>libertés</mark> figurent la <mark>liberté</mark> d'aller et de venir, composante de la <mark>liberté</mark> personnelle protégée par les articles 2 et 4 de la Déclaration des droits de l'homme et du citoyen de 1789 [...] Il résulte de ce qui précède que l'article L. 315-3 du code de la sécurité intérieure, qui ne méconnaît ni la <mark>liberté</mark> d'entreprendre, ni la <mark>liberté</mark> d'expression, ni le droit de propriété, ni aucune autre [...]",
+      "type": "data_juri",
+      "nature": "dc",
+      "origin": "CONSTIT",
+      "etat": null,
+      "solution": "Non conformité partielle - réserve",
+      "moreArticlesCount": 0,
+      "date": null,
+      "sections": [],
+      "num": null,
+      "jorfText": null,
+      "numParution": null,
+      "datePublication": null,
+      "dossiersLegislatifs": [],
+      "nor": "cscl2115694s",
+      "motsCles": [],
+      "appellations": [],
+      "idAttachment": null,
+      "sizeAttachment": null,
+      "moreArticle": false,
+      "additionalResult": {},
+      "raisonSociale": null,
+      "idcc": null,
+      "descriptionFusionHtml": null,
+      "dateSignature": null,
+      "dateDiffusion": null,
+      "reference": null,
+      "themes": [],
+      "conforme": false,
+      "resumePrincipal": [],
+      "autreResume": []
+    },
+    {
+      "titles": [
+        {
+          "id": "CONSTEXT000037434572",
+          "cid": "CONSTEXT000037434572",
+          "title": "Décision 2018-769 DC - 04 septembre 2018 - Loi pour la <mark>liberté</mark> de choisir son avenir professionnel  - Non conformité partielle",
+          "legalStatus": null,
+          "startDate": null,
+          "endDate": null,
+          "nature": null
+        }
+      ],
+      "text": "[...] Il en résulterait une violation de la <mark>liberté</mark> contractuelle et du droit au maintien des conventions légalement conclues. [...] En ce qui concerne les griefs tirés de la méconnaissance de la <mark>liberté</mark> contractuelle et du droit au maintien des conventions légalement conclues : 49. [...]",
+      "type": "data_juri",
+      "nature": "dc",
+      "origin": "CONSTIT",
+      "etat": null,
+      "solution": "Non conformité partielle",
+      "moreArticlesCount": 0,
+      "date": null,
+      "sections": [],
+      "num": null,
+      "jorfText": null,
+      "numParution": null,
+      "datePublication": null,
+      "dossiersLegislatifs": [],
+      "nor": "cscl1824098s",
+      "motsCles": [],
+      "appellations": [],
+      "idAttachment": null,
+      "sizeAttachment": null,
+      "moreArticle": false,
+      "additionalResult": {},
+      "raisonSociale": null,
+      "idcc": null,
+      "descriptionFusionHtml": null,
+      "dateSignature": null,
+      "dateDiffusion": null,
+      "reference": null,
+      "themes": [],
+      "conforme": false,
+      "resumePrincipal": [],
+      "autreResume": []
+    },
+    {
+      "titles": [
+        {
+          "id": "CONSTEXT000052555275",
+          "cid": "CONSTEXT000052555275",
+          "title": "Décision 2025-1173 QPC - 07 novembre 2025 - M. Amine G. [Absence de publicité des débats devant le juge des <mark>libertés</mark> et de la détention statuant sur la détention provisoire du prévenu] - Conformité",
+          "legalStatus": null,
+          "startDate": null,
+          "endDate": null,
+          "nature": null
+        }
+      ],
+      "text": "[...] Elle est relative à la conformité aux droits et <mark>libertés</mark> que la Constitution garantit du premier alinéa de l’article 396 du code de procédure pénale et de l’article 397-1-1 du même code. [...] Par conséquent, les dispositions contestées, qui ne méconnaissent aucun autre droit ou <mark>liberté</mark> que la Constitution garantit, doivent être déclarées conformes à la Constitution. [...]",
+      "type": "data_juri",
+      "nature": "qpc",
+      "origin": "CONSTIT",
+      "etat": null,
+      "solution": "Conformité",
+      "moreArticlesCount": 0,
+      "date": null,
+      "sections": [],
+      "num": null,
+      "jorfText": null,
+      "numParution": null,
+      "datePublication": null,
+      "dossiersLegislatifs": [],
+      "nor": "cscx2531180s",
+      "motsCles": [],
+      "appellations": [],
+      "idAttachment": null,
+      "sizeAttachment": null,
+      "moreArticle": false,
+      "additionalResult": {},
+      "raisonSociale": null,
+      "idcc": null,
+      "descriptionFusionHtml": null,
+      "dateSignature": null,
+      "dateDiffusion": null,
+      "reference": null,
+      "themes": [],
+      "conforme": false,
+      "resumePrincipal": [],
+      "autreResume": []
+    }
+  ],
+  "facets": [
+    {
+      "facetElem": "FOND",
+      "field": "origine",
+      "values": {
+        "ACCO": 387844,
+        "CETAT": 569270,
+        "CIRC": 10646,
+        "CNIL": 26759,
+        "CODE": 76,
+        "CONSTIT": 7372,
+        "JORF": 1125420,
+        "JUFI": 3502,
+        "JURI": 605651,
+        "KALI": 21910,
+        "LEGI": 117140
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "NATURE_CONSTIT",
+      "field": "natureQualifiee",
+      "values": {
+        "Compétences outre-mer (LOM)": 3,
+        "Dispositions promulguées (QPC)": 1073,
+        "Loi du pays (LP)": 1,
+        "Loi ordinaire (DC)": 330,
+        "Loi organique (DC)": 47,
+        "Referendum d'initiative partagée (RIP)": 1,
+        "Règlements des Assemblées (DC)": 7,
+        "Traité (DC)": 9
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "SOLUTION_ELECT",
+      "field": "solution",
+      "values": {
+        "Annulation": 12,
+        "Annulation - Inéligibilité": 1,
+        "Annulation - Non lieu à statuer [QPC]": 2,
+        "Approbation du compte": 2,
+        "Approbation du compte - réformation": 12,
+        "Inéligibilité - rejet [QPC]": 1,
+        "Non lieu à prononcer l’inéligibilité- rejet- rejet [QPC]": 1,
+        "Rejet": 253,
+        "Rejet - Conformité [QPC]": 2,
+        "Rejet - non lieu à statuer [QPC]": 5,
+        "Rejet - rejet [QPC]": 1,
+        "Rejet du compte": 1
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "SOLUTION_CONSTIT",
+      "field": "solution",
+      "values": {
+        "Conformité": 661,
+        "Conformité - déclassement organique": 1,
+        "Conformité - non lieu à statuer": 13,
+        "Conformité - réserve": 152,
+        "Conformité - réserve - déclassement organique": 3,
+        "Conformité - réserve - non lieu à statuer": 4,
+        "Décision avant dire droit": 1,
+        "Législatif": 1,
+        "Non conformité": 1,
+        "Non conformité de date à date": 3,
+        "Non conformité de date à date - conformité": 1,
+        "Non conformité de date à date - non conformité": 1,
+        "Non conformité de date à date - non lieu à statuer": 1,
+        "Non conformité de date à date - réserve": 1,
+        "Non conformité partielle": 196,
+        "Non conformité partielle - déclassement organique": 2,
+        "Non conformité partielle - effet différé": 19,
+        "Non conformité partielle - effet différé - non lieu à statuer": 1,
+        "Non conformité partielle - effet différé - réserve": 7,
+        "Non conformité partielle - effet différé - réserve - non lieu à statuer": 1,
+        "Non conformité partielle - effet différé - réserve transitoire": 2,
+        "Non conformité partielle - réserve": 87,
+        "Non conformité partielle - réserve - déclassement organique": 8,
+        "Non conformité totale": 151,
+        "Non conformité totale - effet différé": 72,
+        "Non conformité totale - effet différé - non lieu à statuer": 1,
+        "Non conformité totale - effet différé - réserve transitoire": 40,
+        "Non conformité totale - effet différé - réserve transitoire - non lieu à statuer": 1,
+        "Non conformité totale - non lieu à statuer": 1,
+        "Non lieu à statuer": 29,
+        "Partiellement compétence de la collectivité": 3,
+        "Partiellement réglementaire": 9,
+        "Rejet": 7,
+        "Réglementaire": 24
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "SOLUTION_AUTRE",
+      "field": "solution",
+      "values": {
+        "Conditions réunies": 1,
+        "Déchéance": 1,
+        "Non lieu à statuer": 1,
+        "Sursis à statuer": 1
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "NATURE_AUTRE",
+      "field": "natureQualifiee",
+      "values": {
+        "Avis sur circonstances exceptionnelles": 1,
+        "Déchéance parlementaire": 3,
+        "Décision d’organisation interne": 5,
+        "Incompatibilité": 0,
+        "Obligations fiscales": 0
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "NATURE_ELCT",
+      "field": "natureQualifiee",
+      "values": {
+        "Autres décisions du contentieux électoral": 6,
+        "Election du Président de la République": 27,
+        "Election du Sénat": 22,
+        "Election à l’Assemblée Nationale": 241,
+        "Référendum": 7
+      },
+      "childs": {},
+      "totalElement": 0
+    },
+    {
+      "facetElem": "NATURE_NORME_AUTRE",
+      "field": "natureQualifiee",
+      "values": {
+        "Délégalisation (L)": 34,
+        "Fin de non recevoir (FNR)": 0
+      },
+      "childs": {},
+      "totalElement": 0
+    }
+  ],
+  "totalResultNumber": 1817,
+  "totalArticleResultNumber": 0,
+  "typePagination": "DEFAUT",
+  "descriptionFusionHtml": null
+}

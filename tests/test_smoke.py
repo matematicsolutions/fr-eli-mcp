@@ -57,3 +57,41 @@ async def test_smoke_get_decision_has_native_ecli() -> None:
     assert decision.ecli and decision.ecli.startswith("ECLI:FR:")
     assert decision.source_url and "/juri/id/" in decision.source_url
     assert decision.human_readable_citation
+
+
+@pytest.mark.asyncio
+async def test_smoke_search_and_get_constit_decision() -> None:
+    res = await fr_search("liberte", fond="CONSTIT", page_size=3)
+    assert res.total >= 1
+    hit = res.hits[0]
+    assert hit.id and hit.id.startswith("CONSTEXT")
+    assert hit.source_url and hit.source_url.startswith("https://www.legifrance.gouv.fr/cons/id/")
+
+    decision = await fr_get_decision(hit.id)
+    assert decision.ecli and decision.ecli.startswith("ECLI:FR:CC:")
+    assert decision.juridiction == "Conseil constitutionnel"
+    assert decision.source_url and "/cons/id/" in decision.source_url
+    assert decision.human_readable_citation
+    assert decision.human_readable_citation.startswith("Cons. const.")
+
+
+@pytest.mark.asyncio
+async def test_smoke_search_and_get_cetat_decision() -> None:
+    # CETAT covers Conseil d'Etat, CAA and TA. Unlike CONSTIT, not every CETAT decision carries
+    # a native ECLI (CAA/TA coverage is uneven) - search several hits and require at least one
+    # populated ECLI, never assert it on an arbitrary single hit.
+    res = await fr_search("urbanisme", fond="CETAT", page_size=5)
+    assert res.total >= 1
+    hit = res.hits[0]
+    assert hit.id and hit.id.startswith("CETATEXT")
+    assert hit.source_url and hit.source_url.startswith("https://www.legifrance.gouv.fr/ceta/id/")
+
+    found_ecli = False
+    for h in res.hits:
+        decision = await fr_get_decision(h.id)
+        assert decision.source_url and "/ceta/id/" in decision.source_url
+        assert decision.human_readable_citation
+        if decision.ecli:
+            assert decision.ecli.startswith("ECLI:FR:CE")
+            found_ecli = True
+    assert found_ecli, "expected at least one CETAT hit with a native ECLI"

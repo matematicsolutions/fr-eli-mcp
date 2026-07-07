@@ -81,6 +81,52 @@ def test_juri_native_ecli():
     assert norm["human_readable_citation"]
 
 
+def test_search_constit_hits():
+    norm = citations.normalize_search(_load("search_constit.json"), "CONSTIT")
+    assert norm["total"] >= 1
+    hit = norm["hits"][0]
+    assert hit["kind"] == "constit"
+    assert hit["id"].startswith("CONSTEXT")
+    assert hit["source_url"].startswith("https://www.legifrance.gouv.fr/cons/id/")
+    assert hit["eli_uri"] == hit["source_url"]
+    assert hit["human_readable_citation"]
+
+
+def test_search_cetat_hits():
+    norm = citations.normalize_search(_load("search_cetat.json"), "CETAT")
+    assert norm["total"] >= 1
+    hit = norm["hits"][0]
+    assert hit["kind"] == "cetat"
+    assert hit["id"].startswith("CETATEXT")
+    assert hit["source_url"].startswith("https://www.legifrance.gouv.fr/ceta/id/")
+    assert hit["eli_uri"] == hit["source_url"]
+    assert hit["human_readable_citation"]
+
+
+def test_consult_juri_constit_native_ecli_and_citation():
+    norm = citations.normalize_juri(_load("consult_juri_constit.json"))
+    assert norm is not None
+    assert norm["decision_id"].startswith("CONSTEXT")
+    assert norm["ecli"] == "ECLI:FR:CC:2025:2025.1173.QPC"
+    assert norm["juridiction"] == "Conseil constitutionnel"
+    assert norm["source_url"] == "https://www.legifrance.gouv.fr/cons/id/CONSTEXT000052555275"
+    assert norm["eli_uri"] == norm["source_url"]
+    # French citation convention: "Cons. const., decision n 2025-1173 QPC du 7 novembre 2025 - ..."
+    citation = norm["human_readable_citation"]
+    assert citation.startswith("Cons. const., decision n° 2025-1173 QPC du 7 novembre 2025")
+
+
+def test_consult_juri_cetat_native_ecli():
+    norm = citations.normalize_juri(_load("consult_juri_cetat.json"))
+    assert norm is not None
+    assert norm["decision_id"].startswith("CETATEXT")
+    assert norm["ecli"] and norm["ecli"].startswith("ECLI:FR:CE")
+    assert norm["juridiction"] == "Conseil d'État"
+    assert norm["source_url"] == "https://www.legifrance.gouv.fr/ceta/id/CETATEXT000054178503"
+    assert norm["eli_uri"] == norm["source_url"]
+    assert norm["human_readable_citation"]
+
+
 def test_strip_date_suffix_and_marks():
     assert citations.strip_date_suffix("LEGITEXT000033205014_08-09-2023") == "LEGITEXT000033205014"
     assert citations.strip_date_suffix("JURITEXT000051743650") == "JURITEXT000051743650"
@@ -89,6 +135,11 @@ def test_strip_date_suffix_and_marks():
 
 def test_no_fabricated_eli():
     """eli_uri must be a legifrance.gouv.fr URL, never a synthesized /eli/ path."""
-    for fx, fond in [("search_loda.json", "LODA_DATE"), ("search_juri.json", "JURI")]:
+    for fx, fond in [
+        ("search_loda.json", "LODA_DATE"),
+        ("search_juri.json", "JURI"),
+        ("search_constit.json", "CONSTIT"),
+        ("search_cetat.json", "CETAT"),
+    ]:
         for hit in citations.normalize_search(_load(fx), fond)["hits"]:
             assert "/eli/" not in (hit["eli_uri"] or ""), "must not fabricate a native /eli/ URI"

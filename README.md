@@ -22,9 +22,11 @@ Konfiguracja klienta MCP (stdio):
 (Budowanie ze źródeł — niżej.)
 
 An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr). It searches
-French legislation (LODA laws & decrees, codes) and case law (JURI), and returns verbatim text with
-verifiable citations. Part of the **eu-legal-mcp** line of national legal connectors by
-[MateMatic](https://matematic.co).
+French legislation (LODA laws & decrees, codes) and case law from three jurisdictions - Cour de
+cassation / cours d'appel (JURI), the **Conseil constitutionnel** (CONSTIT - QPC/DC decisions) and
+the **administrative courts** (CETAT - Conseil d'Etat, cours administratives d'appel, tribunaux
+administratifs) - and returns verbatim text with verifiable citations. Part of the **eu-legal-mcp**
+line of national legal connectors by [MateMatic](https://matematic.co).
 
 Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation`
 (French convention) and a resolvable `source_url`.
@@ -36,10 +38,28 @@ Every response carries the citation contract: a stable `eli_uri`, a `human_reada
 
 | Tool | What it does |
 | --- | --- |
-| `fr_search(query, fond, page_size)` | Keyword search a `fond`: `LODA` (laws & decrees), `CODE` (codes), `JURI` (case law). Returns hits with the citation contract; `CODE` hits expose matched `article_id`s. |
+| `fr_search(query, fond, page_size)` | Keyword search a `fond`: `LODA` (laws & decrees), `CODE` (codes), `JURI` (Cour de cassation case law), `CONSTIT` (Conseil constitutionnel decisions), `CETAT` (administrative case law: Conseil d'Etat, CAA, TA). Returns hits with the citation contract; `CODE` hits expose matched `article_id`s. |
 | `fr_get_act(text_id, date)` | Consult a LODA law/decree by `LEGITEXT...` id. Returns metadata + a table of contents (`articles`). |
 | `fr_get_text(article_id)` | Verbatim text of a single article by `LEGIARTI...` id. |
-| `fr_get_decision(decision_id)` | A JURI court decision by `JURITEXT...` id, with its **native `ecli`**, court, formation, solution and text. |
+| `fr_get_decision(decision_id)` | A court decision by `JURITEXT...`, `CONSTEXT...` or `CETATEXT...` id, with its **native `ecli`** (when populated), court, formation, solution and text. |
+
+### Jurisdictions covered
+
+| Fond | Court(s) | Id prefix | Native ECLI |
+| --- | --- | --- | --- |
+| `JURI` | Cour de cassation, cours d'appel | `JURITEXT...` | Yes |
+| `CONSTIT` | Conseil constitutionnel (QPC + DC decisions, ~7 400+ live on PISTE) | `CONSTEXT...` | Yes (`ECLI:FR:CC:...`) |
+| `CETAT` | Conseil d'Etat, cours administratives d'appel (CAA), tribunaux administratifs (TA) | `CETATEXT...` | Yes for Conseil d'Etat; frequently `null` for CAA/TA (uneven ECLI coverage upstream - never fabricated) |
+
+Conseil constitutionnel decisions get the French citation convention: `Cons. const., decision n°
+2025-1173 QPC du 7 novembre 2025 - [case name]`. JURI/CETAT decisions cite the Legifrance `titre`
+(court, formation, date, dossier number) verbatim.
+
+> **Judilibre** (`api.piste.gouv.fr/cassation/judilibre`) was evaluated as an alternative Cour de
+> cassation source but requires its own PISTE API subscription beyond the Legifrance one already
+> held by this connector (confirmed via a live sandbox probe: `403` without it). Not integrated in
+> this release - `JURI` already covers Cour de cassation case law through the existing Legifrance
+> subscription.
 
 ### A note on ELI vs ECLI
 
@@ -48,8 +68,10 @@ ELI field `null` for the legislation we tested**. Following this line's rule - *
 have, never fabricate an ELI* - `eli_uri` carries the **stable, resolvable Legifrance resource URL**
 (CID-keyed), not a `/eli/...` string parsed from prose. Each response repeats this in `eli_note`.
 
-Case law is different: the API returns a **native, authoritative ECLI**
-(e.g. `ECLI:FR:CCASS:2025:C100399`), surfaced verbatim in `fr_get_decision`.
+Case law is different: the API returns a **native, authoritative ECLI** for Cour de cassation (e.g.
+`ECLI:FR:CCASS:2025:C100399`), Conseil constitutionnel (e.g. `ECLI:FR:CC:2025:2025.1173.QPC`) and
+Conseil d'Etat (e.g. `ECLI:FR:CECHR:2026:506507.20260529`), surfaced verbatim in `fr_get_decision`.
+CAA/TA decisions under `CETAT` frequently have no ECLI - the field is `null`, never fabricated.
 
 ## Configuration
 

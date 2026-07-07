@@ -27,7 +27,7 @@ from .cache import HttpCache
 DEFAULT_OAUTH_URL = "https://sandbox-oauth.piste.gouv.fr/api/oauth/token"
 DEFAULT_BASE_URL = "https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app"
 DEFAULT_TIMEOUT = httpx.Timeout(40.0, connect=10.0)
-USER_AGENT = "fr-eli-mcp/0.1.0 (+https://github.com/matematicsolutions/fr-eli-mcp)"
+USER_AGENT = "fr-eli-mcp/0.2.0 (+https://github.com/matematicsolutions/fr-eli-mcp)"
 
 _RETRY_STATUS = frozenset({429, 500, 502, 503, 504})
 _MAX_ATTEMPTS = 3
