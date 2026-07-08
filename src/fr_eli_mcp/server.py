@@ -25,17 +25,20 @@ from mcp.types import ToolAnnotations
 from . import citations
 from .audit import AuditLogger, hash_input, timer
 from .client import CredentialsError, LegifranceClient
-from .models import Act, ArticleText, Decision, SearchResult
+from .models import Act, ArticleText, CompanyAgreement, Decision, Deliberation, SearchResult
 
 INSTRUCTIONS = """\
-This MCP server exposes the French Legifrance API through PISTE (piste.gouv.fr). It covers consolidated legislation (LODA laws & decrees, and codes) and case law from three jurisdictions: Cour de cassation / cours d'appel (JURI), the Conseil constitutionnel (CONSTIT - QPC/DC decisions), and the administrative courts (CETAT - Conseil d'Etat, cours administratives d'appel, tribunaux administratifs). Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation` (French convention) and a `source_url` (a resolvable legifrance.gouv.fr page).
+This MCP server exposes the French Legifrance API through PISTE (piste.gouv.fr). It covers consolidated legislation (LODA laws & decrees, and codes), case law from three jurisdictions - Cour de cassation / cours d'appel (JURI), the Conseil constitutionnel (CONSTIT - QPC/DC decisions), and the administrative courts (CETAT - Conseil d'Etat, cours administratives d'appel, tribunaux administratifs) - plus CNIL deliberations (CNIL), collective labour agreements (KALI) and company-level agreements (ACCO). Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation` (French convention) and a `source_url` (a resolvable legifrance.gouv.fr page).
 
 ## Call order
 
-1. `fr_search` - keyword search a `fond` (`LODA` laws/decrees, `CODE` codes, `JURI` Cour de cassation case law, `CONSTIT` Conseil constitutionnel decisions, `CETAT` administrative case law). Each hit carries `id`, `title`, `human_readable_citation`, `source_url`. For `CODE` hits, matched `articles` carry their `article_id`.
+1. `fr_search` - keyword search a `fond` (`LODA` laws/decrees, `CODE` codes, `JURI` Cour de cassation case law, `CONSTIT` Conseil constitutionnel decisions, `CETAT` administrative case law, `CNIL` CNIL deliberations, `KALI` collective labour agreements, `ACCO` company-level agreements). Each hit carries `id`, `title`, `human_readable_citation`, `source_url`. For `CODE` hits, matched `articles` carry their `article_id`.
 2. `fr_get_act` - consult a LODA law/decree by its `text_id` (a `LEGITEXT...` id). Returns metadata, citation and a table of contents (`articles` with their `article_id` + `num`).
-3. `fr_get_text` - the verbatim text of a single article by `article_id` (a `LEGIARTI...` id).
+3. `fr_get_text` - the verbatim text of a single article by `article_id` (a `LEGIARTI...` id from legislation/codes, or a `KALIARTI...` id from a collective agreement's table of contents).
 4. `fr_get_decision` - a court decision by `decision_id` (a `JURITEXT...`, `CONSTEXT...` or `CETATEXT...` id, from `fr_search` on fond `JURI`, `CONSTIT` or `CETAT`). Returns the native `ecli`, court, formation, solution and the decision text.
+5. `fr_get_deliberation` - a CNIL deliberation by its `CNILTEXT...` id (from `fr_search` on fond `CNIL`). Returns the verbatim deliberation text.
+6. `fr_get_convention` - a collective labour agreement text by its `KALITEXT...` id (from `fr_search` on fond `KALI`). Returns metadata and a table of contents whose `KALIARTI...` ids resolve via `fr_get_text`.
+7. `fr_get_company_agreement` - a company-level agreement by its `ACCOTEXT...` id (from `fr_search` on fond `ACCO`). Returns METADATA ONLY (company, SIRET, IDCC, sector, themes, unions, dates) - Legifrance distributes the full text of ACCO agreements only as a .docx attachment; cite `source_url`.
 
 ## Hard constraints
 
@@ -89,6 +92,9 @@ _FOND_MAP = {
     "JURI": "JURI",
     "CONSTIT": "CONSTIT",
     "CETAT": "CETAT",
+    "CNIL": "CNIL",
+    "KALI": "KALI",
+    "ACCO": "ACCO",
 }
 
 # decision_id prefix -> which fonds' consult/juri endpoint can resolve it.
@@ -171,7 +177,9 @@ async def fr_search(query: str, fond: str = "LODA", page_size: int = 10) -> Sear
         fond: one of ``LODA`` (laws & decrees), ``CODE`` (codes), ``JURI`` (Cour de cassation
             case law), ``CONSTIT`` (Conseil constitutionnel - QPC/DC decisions), ``CETAT``
             (administrative case law: Conseil d'Etat, cours administratives d'appel, tribunaux
-            administratifs).
+            administratifs), ``CNIL`` (CNIL deliberations, incl. sanctions), ``KALI``
+            (collective labour agreements / conventions collectives), ``ACCO`` (company-level
+            agreements - metadata + search only).
         page_size: number of hits (1..100).
 
     Returns:
@@ -259,16 +267,24 @@ async def fr_get_act(text_id: str, date: str | None = None) -> Act:
 
 @mcp.tool(annotations=READ_ONLY)
 async def fr_get_text(article_id: str) -> ArticleText:
-    """Fetch the verbatim text of a single article by its ``LEGIARTI...`` id.
+    """Fetch the verbatim text of a single article (``LEGIARTI...`` or ``KALIARTI...``).
 
     Args:
-        article_id: a ``LEGIARTI...`` identifier (from ``fr_get_act`` or a ``CODE`` search hit).
+        article_id: a ``LEGIARTI...`` identifier (from ``fr_get_act`` or a ``CODE`` search
+            hit), or a ``KALIARTI...`` identifier (from ``fr_get_convention``).
 
     Returns:
         ``ArticleText`` with the article ``text``, citation and ``source_url``.
     """
     audit = _audit()
-    _require_prefix(article_id, "LEGIARTI", "article_id")
+    if not article_id or not article_id.strip():
+        raise ToolError("invalid_arg", "article_id is required.")
+    if not article_id.startswith(("LEGIARTI", "KALIARTI")):
+        raise ToolError(
+            "invalid_arg",
+            f"article_id={article_id!r} must be a Legifrance LEGIARTI... or "
+            "KALIARTI... identifier.",
+        )
     input_hash = hash_input({"article_id": article_id})
 
     with timer() as t:
@@ -341,6 +357,130 @@ async def fr_get_decision(decision_id: str) -> Decision:
     norm["byte_size"] = len(text.encode("utf-8"))
     result = Decision.model_validate(norm)
     audit.log(tool="fr_get_decision", input_hash=input_hash, output_count_or_size=result.byte_size or 0,
+              duration_ms=t.duration_ms, status="ok")
+    return result
+
+
+# ---------------------------------------------------------------------------
+# fr_get_deliberation (fond CNIL, feature-003)
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool(annotations=READ_ONLY)
+async def fr_get_deliberation(deliberation_id: str) -> Deliberation:
+    """Consult a CNIL deliberation by its ``CNILTEXT...`` id.
+
+    Args:
+        deliberation_id: a ``CNILTEXT...`` identifier (from ``fr_search`` on fond ``CNIL``).
+
+    Returns:
+        ``Deliberation`` with the deliberation ``text``, nature (e.g. ``Sanction``),
+        citation and ``source_url``. CNIL deliberations carry no ECLI/ELI - none is invented.
+    """
+    audit = _audit()
+    _require_prefix(deliberation_id, "CNILTEXT", "deliberation_id")
+    input_hash = hash_input({"deliberation_id": deliberation_id})
+
+    with timer() as t:
+        try:
+            async with LegifranceClient() as client:
+                raw = await client.consult_cnil(deliberation_id)
+        except Exception as exc:
+            audit.log(tool="fr_get_deliberation", input_hash=input_hash, output_count_or_size=0,
+                      duration_ms=t.duration_ms or 0, status="error",
+                      error=f"{type(exc).__name__}: {exc}")
+            raise _map_upstream(exc) from exc
+
+    norm = citations.normalize_cnil(raw)
+    if norm is None:
+        raise ToolError("not_found", f"No CNIL deliberation found for {deliberation_id}.")
+    text = norm.get("text") or ""
+    norm["byte_size"] = len(text.encode("utf-8"))
+    result = Deliberation.model_validate(norm)
+    audit.log(tool="fr_get_deliberation", input_hash=input_hash,
+              output_count_or_size=result.byte_size or 0,
+              duration_ms=t.duration_ms, status="ok")
+    return result
+
+
+# ---------------------------------------------------------------------------
+# fr_get_convention (fond KALI, feature-003)
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool(annotations=READ_ONLY)
+async def fr_get_convention(convention_id: str) -> Act:
+    """Consult a collective labour agreement text by its ``KALITEXT...`` id.
+
+    Args:
+        convention_id: a ``KALITEXT...`` identifier (from ``fr_search`` on fond ``KALI``).
+
+    Returns:
+        ``Act`` with metadata, citation and a table of contents whose ``KALIARTI...``
+        ``article_id`` values resolve through ``fr_get_text``.
+    """
+    audit = _audit()
+    _require_prefix(convention_id, "KALITEXT", "convention_id")
+    input_hash = hash_input({"convention_id": convention_id})
+
+    with timer() as t:
+        try:
+            async with LegifranceClient() as client:
+                raw = await client.consult_kali_text(convention_id)
+        except Exception as exc:
+            audit.log(tool="fr_get_convention", input_hash=input_hash, output_count_or_size=0,
+                      duration_ms=t.duration_ms or 0, status="error",
+                      error=f"{type(exc).__name__}: {exc}")
+            raise _map_upstream(exc) from exc
+
+    norm = citations.normalize_kali(raw)
+    if norm is None:
+        raise ToolError("not_found", f"No collective agreement text found for {convention_id}.")
+    result = Act.model_validate(norm)
+    audit.log(tool="fr_get_convention", input_hash=input_hash,
+              output_count_or_size=len(result.articles),
+              duration_ms=t.duration_ms, status="ok")
+    return result
+
+
+# ---------------------------------------------------------------------------
+# fr_get_company_agreement (fond ACCO, feature-003)
+# ---------------------------------------------------------------------------
+
+
+@mcp.tool(annotations=READ_ONLY)
+async def fr_get_company_agreement(agreement_id: str) -> CompanyAgreement:
+    """Consult a company-level agreement by its ``ACCOTEXT...`` id - METADATA ONLY.
+
+    Legifrance distributes the full text of ACCO agreements only as a ``.docx``
+    attachment, so this tool returns the agreement metadata (company, SIRET, IDCC,
+    sector, themes, signatory unions, dates) plus the resolvable ``source_url``.
+
+    Args:
+        agreement_id: an ``ACCOTEXT...`` identifier (from ``fr_search`` on fond ``ACCO``).
+
+    Returns:
+        ``CompanyAgreement`` metadata with citation and ``source_url``.
+    """
+    audit = _audit()
+    _require_prefix(agreement_id, "ACCOTEXT", "agreement_id")
+    input_hash = hash_input({"agreement_id": agreement_id})
+
+    with timer() as t:
+        try:
+            async with LegifranceClient() as client:
+                raw = await client.consult_acco(agreement_id)
+        except Exception as exc:
+            audit.log(tool="fr_get_company_agreement", input_hash=input_hash,
+                      output_count_or_size=0, duration_ms=t.duration_ms or 0, status="error",
+                      error=f"{type(exc).__name__}: {exc}")
+            raise _map_upstream(exc) from exc
+
+    norm = citations.normalize_acco(raw)
+    if norm is None:
+        raise ToolError("not_found", f"No company agreement found for {agreement_id}.")
+    result = CompanyAgreement.model_validate(norm)
+    audit.log(tool="fr_get_company_agreement", input_hash=input_hash, output_count_or_size=1,
               duration_ms=t.duration_ms, status="ok")
     return result
 

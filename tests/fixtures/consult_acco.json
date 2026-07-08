@@ -1,0 +1,55 @@
+{
+ "executionTime": 6,
+ "dereferenced": false,
+ "acco": {
+  "id": "ACCOTEXT000053643828",
+  "origine": "ACCO",
+  "url": "texte/acco/ACCO/TEXT/00/00/53/64/38/ACCOTEXT000053643828.xml",
+  "nature": "ACCORD",
+  "titreTexte": "Accord d'entreprise relatif au télétravail",
+  "attachementUrl": "/2025/12/19/T09426064936-32862158600143.docx",
+  "fileSize": "624,3 Ko",
+  "numero": "T09426064936",
+  "siret": "32862158600143",
+  "codeUniteSignataire": "05",
+  "dateMaj": 1772409600000,
+  "dateDepot": 1772150400000,
+  "dateTexte": 1766102400000,
+  "relevantDate": 1766102400000,
+  "dateEffet": 1766188800000,
+  "dateFin": 32472144000000,
+  "dateDiffusion": 1773100800000,
+  "codeApe": "5110Z",
+  "codeIdcc": "275",
+  "raisonSociale": "CORSAIR (Télétravail)",
+  "conformeVersionIntegrale": true,
+  "secteur": "Transports aériens de passagers",
+  "themes": [
+   {
+    "code": "141",
+    "libelle": "Télétravail",
+    "groupe": "12"
+   }
+  ],
+  "syndicats": [
+   {
+    "code": "2",
+    "libelle": "CFTC"
+   },
+   {
+    "code": "4",
+    "libelle": "CFE-CGC"
+   },
+   {
+    "code": "6",
+    "libelle": "Autre"
+   }
+  ],
+  "signataires": [
+   "91"
+  ],
+  "adressesPostales": [],
+  "refInjection": "MD-20260310_055147_486_AEQUOT",
+  "idTechInjection": "index_DATA_NEXT_ACCORD_ACCOTEXT000053643828"
+ }
+}

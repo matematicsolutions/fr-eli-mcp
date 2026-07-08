@@ -13,7 +13,15 @@ import os
 
 import pytest
 
-from fr_eli_mcp.server import fr_get_act, fr_get_decision, fr_get_text, fr_search
+from fr_eli_mcp.server import (
+    fr_get_act,
+    fr_get_company_agreement,
+    fr_get_convention,
+    fr_get_decision,
+    fr_get_deliberation,
+    fr_get_text,
+    fr_search,
+)
 
 _HAS_CREDS = bool(os.environ.get("FR_ELI_CLIENT_ID") and os.environ.get("FR_ELI_CLIENT_SECRET"))
 pytestmark = pytest.mark.skipif(_HAS_CREDS is False, reason="PISTE credentials not configured")
@@ -95,3 +103,45 @@ async def test_smoke_search_and_get_cetat_decision() -> None:
             assert decision.ecli.startswith("ECLI:FR:CE")
             found_ecli = True
     assert found_ecli, "expected at least one CETAT hit with a native ECLI"
+
+
+@pytest.mark.asyncio
+async def test_smoke_search_and_get_cnil_deliberation() -> None:
+    res = await fr_search("sanction", fond="CNIL", page_size=3)
+    assert res.total >= 1
+    hit = res.hits[0]
+    assert hit.id and hit.id.startswith("CNILTEXT")
+    delib = await fr_get_deliberation(hit.id)
+    assert delib.text, "deliberation should have verbatim text"
+    assert delib.source_url and "/cnil/id/" in delib.source_url
+    assert delib.human_readable_citation
+
+
+@pytest.mark.asyncio
+async def test_smoke_search_kali_and_read_article() -> None:
+    res = await fr_search("convention collective", fond="KALI", page_size=3)
+    assert res.total >= 1
+    hit = res.hits[0]
+    assert hit.id and hit.id.startswith("KALITEXT")
+    conv = await fr_get_convention(hit.id)
+    assert conv.source_url and "/conv_coll/id/" in conv.source_url
+    assert conv.human_readable_citation
+    if conv.articles:  # some KALI texts (letters of adhesion) have no articles
+        art_id = conv.articles[0].article_id
+        assert art_id and art_id.startswith("KALIARTI")
+        text = await fr_get_text(art_id)
+        assert text.text, "KALI article should have verbatim text"
+        assert text.source_url and "/conv_coll/id/" in text.source_url
+
+
+@pytest.mark.asyncio
+async def test_smoke_search_and_get_company_agreement() -> None:
+    res = await fr_search("teletravail", fond="ACCO", page_size=3)
+    assert res.total >= 1
+    hit = res.hits[0]
+    assert hit.id and hit.id.startswith("ACCOTEXT")
+    agr = await fr_get_company_agreement(hit.id)
+    assert agr.raison_sociale, "company agreement should carry the depositing company"
+    assert agr.source_url and "/acco/id/" in agr.source_url
+    assert agr.attachment_note, "metadata-only contract must be explicit"
+    assert agr.human_readable_citation

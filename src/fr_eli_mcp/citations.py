@@ -31,7 +31,17 @@ from typing import Any
 
 WEB_BASE = "https://www.legifrance.gouv.fr"
 
-_ID_PREFIXES = ("LEGITEXT", "JORFTEXT", "JURITEXT", "CETATEXT", "KALITEXT", "LEGIARTI")
+_ID_PREFIXES = (
+    "LEGITEXT",
+    "JORFTEXT",
+    "JURITEXT",
+    "CETATEXT",
+    "KALITEXT",
+    "KALIARTI",
+    "LEGIARTI",
+    "CNILTEXT",
+    "ACCOTEXT",
+)
 _MARK_RE = re.compile(r"</?mark>")
 
 
@@ -82,6 +92,12 @@ def legifrance_url(identifier: str | None, kind: str) -> str | None:
             return f"{WEB_BASE}/ceta/id/{identifier}"
         case "jorf":
             return f"{WEB_BASE}/jorf/id/{identifier}"
+        case "cnil":
+            return f"{WEB_BASE}/cnil/id/{identifier}"
+        case "kali":
+            return f"{WEB_BASE}/conv_coll/id/{identifier}"
+        case "acco":
+            return f"{WEB_BASE}/acco/id/{identifier}"
         case _:
             return None
 
@@ -111,6 +127,20 @@ def normalize_search_hit(result: dict[str, Any], fond: str) -> dict[str, Any]:
     if fond == "CONSTIT":
         out["kind"] = "constit"
         url = legifrance_url(cid or text_id, "constit")
+    elif fond == "CNIL":
+        out["kind"] = "cnil"
+        url = legifrance_url(cid or text_id, "cnil")
+    elif fond == "KALI":
+        out["kind"] = "kali"
+        out["idcc"] = result.get("idcc")
+        url = legifrance_url(cid or text_id, "kali")
+    elif fond == "ACCO":
+        out["kind"] = "acco"
+        out["idcc"] = result.get("idcc")
+        out["raison_sociale"] = result.get("raisonSociale")
+        if title and result.get("raisonSociale"):
+            out["human_readable_citation"] = f"{title} ({result['raisonSociale']})"
+        url = legifrance_url(cid or text_id, "acco")
     elif fond == "CETAT":
         out["kind"] = "cetat"
         url = legifrance_url(cid or text_id, "cetat")
@@ -229,7 +259,8 @@ def normalize_article(payload: dict[str, Any]) -> dict[str, Any] | None:
         citation = f"Art. {num}"
     else:
         citation = code_title
-    url = legifrance_url(art_id, "code_article")
+    url_kind = "kali" if str(art_id).startswith("KALIARTI") else "code_article"
+    url = legifrance_url(art_id, url_kind)
     return {
         "article_id": art_id,
         "num": num,
@@ -318,6 +349,137 @@ def normalize_juri(payload: dict[str, Any]) -> dict[str, Any] | None:
         "nature": text.get("nature"),
         "title": text.get("titre"),
         "text": text.get("texte"),
+        "human_readable_citation": citation,
+        "source_url": url,
+        "eli_uri": url,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Consult: CNIL deliberation (fond CNIL, feature-003)
+# ---------------------------------------------------------------------------
+
+
+def normalize_cnil(payload: dict[str, Any]) -> dict[str, Any] | None:
+    """Normalize a ``/consult/cnil`` response (CNIL deliberations, ``CNILTEXT...`` ids).
+
+    Citation convention: ``CNIL, deliberation n° SAN-2026-002 du 8 janvier 2026``. The API
+    returns ``ecli`` and ``idEli`` null for CNIL deliberations - never fabricate them;
+    ``eli_uri`` carries the resolvable ``/cnil/id/...`` Legifrance URL.
+    """
+    text = payload.get("text")
+    if not text or not text.get("id"):
+        return None
+    delib_id = text.get("id")
+    url = legifrance_url(delib_id, "cnil")
+    num = text.get("num")
+    date_prose = _fr_date(text.get("dateTexte"))
+    if num and date_prose:
+        citation = f"CNIL, deliberation n° {num} du {date_prose}"
+    else:
+        citation = text.get("titre")
+    return {
+        "deliberation_id": delib_id,
+        "num": num,
+        "nature": text.get("nature"),
+        "nature_delib": text.get("natureDelib"),
+        "etat": text.get("etat"),
+        "date_texte": ms_to_date(text.get("dateTexte")),
+        "date_publication": ms_to_date(text.get("datePubli")),
+        "title": text.get("titre"),
+        "title_long": text.get("titreLong"),
+        "text": text.get("texte"),
+        "human_readable_citation": citation,
+        "source_url": url,
+        "eli_uri": url,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Consult: KALI collective agreement text (fond KALI, feature-003)
+# ---------------------------------------------------------------------------
+
+
+def normalize_kali(payload: dict[str, Any]) -> dict[str, Any] | None:
+    """Normalize a ``/consult/kaliText`` response (``KALITEXT...`` ids).
+
+    Same Act shape as LODA: metadata + a table of contents whose ``article_id`` values
+    (``KALIARTI...``) resolve through the shared ``/consult/getArticle`` endpoint.
+    """
+    if not payload or not (payload.get("id") or payload.get("cid")):
+        return None
+    text_id = strip_date_suffix(payload.get("id"))
+    title = payload.get("title")
+    toc: list[dict[str, Any]] = []
+    _walk_articles(payload.get("sections"), toc)
+    for art in payload.get("articles") or []:
+        if art.get("id"):
+            toc.append(
+                {"article_id": art.get("id"), "num": art.get("num"), "etat": art.get("etat")}
+            )
+    url = legifrance_url(text_id, "kali")
+    return {
+        "text_id": text_id,
+        "cid": payload.get("cid"),
+        "nor": payload.get("nor"),
+        "title": title,
+        "nature": payload.get("nature"),
+        "etat": payload.get("jurisState") or payload.get("etat"),
+        "date_parution": ms_to_date(payload.get("dateParution")),
+        "num_parution": payload.get("numParution"),
+        "date_debut_version": payload.get("dateDebutVersion"),
+        "date_fin_version": payload.get("dateFinVersion"),
+        "articles": toc,
+        "human_readable_citation": title,
+        "source_url": url,
+        "eli_uri": url,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Consult: ACCO company-level agreement (fond ACCO, feature-003)
+# ---------------------------------------------------------------------------
+
+
+def normalize_acco(payload: dict[str, Any]) -> dict[str, Any] | None:
+    """Normalize a ``/consult/acco`` response (``ACCOTEXT...`` ids) - METADATA ONLY.
+
+    The endpoint returns the agreement's full text solely as a base64 ``.docx`` attachment
+    (``data`` field); we deliberately do NOT decode or re-serve it - callers get the
+    metadata plus the resolvable Legifrance page in ``source_url``.
+    """
+    acco = payload.get("acco")
+    if not acco or not acco.get("id"):
+        return None
+    agreement_id = acco.get("id")
+    url = legifrance_url(agreement_id, "acco")
+    title = acco.get("titreTexte")
+    company = acco.get("raisonSociale")
+    citation = f"{title} ({company})" if title and company else title
+    themes = [
+        t.get("libelle") for t in (acco.get("themes") or []) if isinstance(t, dict)
+    ]
+    unions = [
+        s.get("libelle") for s in (acco.get("syndicats") or []) if isinstance(s, dict)
+    ]
+    return {
+        "agreement_id": agreement_id,
+        "nature": acco.get("nature"),
+        "title": title,
+        "raison_sociale": company,
+        "siret": acco.get("siret"),
+        "idcc": acco.get("codeIdcc"),
+        "code_ape": acco.get("codeApe"),
+        "secteur": acco.get("secteur"),
+        "themes": [t for t in themes if t],
+        "syndicats": [u for u in unions if u],
+        "date_texte": ms_to_date(acco.get("dateTexte")),
+        "date_effet": ms_to_date(acco.get("dateEffet")),
+        "date_depot": ms_to_date(acco.get("dateDepot")),
+        "attachment_note": (
+            "Full text is only distributed by Legifrance as a .docx attachment; consult "
+            "source_url for the human-readable page. This tool returns metadata only."
+        ),
         "human_readable_citation": citation,
         "source_url": url,
         "eli_uri": url,

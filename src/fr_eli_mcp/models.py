@@ -37,12 +37,14 @@ class CodeArticleRef(_Tolerant):
 class SearchHit(_Tolerant):
     """One normalized search result."""
 
-    kind: str | None = None  # loda | code | juri
+    kind: str | None = None  # loda | code | juri | constit | cetat | cnil | kali | acco
     id: str | None = None
     cid: str | None = None
     title: str | None = None
     nature: str | None = None
     etat: str | None = None
+    idcc: str | int | None = None  # KALI / ACCO - collective agreement number
+    raison_sociale: str | None = None  # ACCO - depositing company
     articles: list[CodeArticleRef] = Field(default_factory=list)
 
     # Citation contract.
@@ -123,6 +125,49 @@ class ArticleText(_Tolerant):
 # ---------------------------------------------------------------------------
 # Consult: JURI decision (native ECLI)
 # ---------------------------------------------------------------------------
+
+
+class Deliberation(_Tolerant):
+    """Result of ``fr_get_deliberation`` - a CNIL deliberation (fond CNIL)."""
+
+    deliberation_id: str | None = None
+    num: str | None = None
+    nature: str | None = None
+    nature_delib: str | None = None
+    etat: str | None = None
+    date_texte: str | None = None
+    date_publication: str | None = None
+    title: str | None = None
+    title_long: str | None = None
+    text: str | None = None
+    byte_size: int | None = None
+
+    eli_uri: str | None = None
+    human_readable_citation: str | None = None
+    source_url: str | None = None
+
+
+class CompanyAgreement(_Tolerant):
+    """Result of ``fr_get_company_agreement`` - ACCO metadata (text is a docx attachment)."""
+
+    agreement_id: str | None = None
+    nature: str | None = None
+    title: str | None = None
+    raison_sociale: str | None = None
+    siret: str | None = None
+    idcc: str | int | None = None
+    code_ape: str | None = None
+    secteur: str | None = None
+    themes: list[str] = Field(default_factory=list)
+    syndicats: list[str] = Field(default_factory=list)
+    date_texte: str | None = None
+    date_effet: str | None = None
+    date_depot: str | None = None
+    attachment_note: str | None = None
+
+    eli_uri: str | None = None
+    human_readable_citation: str | None = None
+    source_url: str | None = None
 
 
 class Decision(_Tolerant):

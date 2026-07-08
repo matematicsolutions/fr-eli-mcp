@@ -22,11 +22,12 @@ Konfiguracja klienta MCP (stdio):
 (Budowanie ze źródeł — niżej.)
 
 An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr). It searches
-French legislation (LODA laws & decrees, codes) and case law from three jurisdictions - Cour de
+French legislation (LODA laws & decrees, codes), case law from three jurisdictions - Cour de
 cassation / cours d'appel (JURI), the **Conseil constitutionnel** (CONSTIT - QPC/DC decisions) and
 the **administrative courts** (CETAT - Conseil d'Etat, cours administratives d'appel, tribunaux
-administratifs) - and returns verbatim text with verifiable citations. Part of the **eu-legal-mcp**
-line of national legal connectors by [MateMatic](https://matematic.co).
+administratifs) - plus **CNIL deliberations** (CNIL), **collective labour agreements** (KALI) and
+**company-level agreements** (ACCO), and returns verbatim text with verifiable citations. Part of
+the **eu-legal-mcp** line of national legal connectors by [MateMatic](https://matematic.co).
 
 Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation`
 (French convention) and a resolvable `source_url`.
@@ -38,10 +39,21 @@ Every response carries the citation contract: a stable `eli_uri`, a `human_reada
 
 | Tool | What it does |
 | --- | --- |
-| `fr_search(query, fond, page_size)` | Keyword search a `fond`: `LODA` (laws & decrees), `CODE` (codes), `JURI` (Cour de cassation case law), `CONSTIT` (Conseil constitutionnel decisions), `CETAT` (administrative case law: Conseil d'Etat, CAA, TA). Returns hits with the citation contract; `CODE` hits expose matched `article_id`s. |
+| `fr_search(query, fond, page_size)` | Keyword search a `fond`: `LODA` (laws & decrees), `CODE` (codes), `JURI` (Cour de cassation case law), `CONSTIT` (Conseil constitutionnel decisions), `CETAT` (administrative case law: Conseil d'Etat, CAA, TA), `CNIL` (CNIL deliberations), `KALI` (collective labour agreements), `ACCO` (company-level agreements). Returns hits with the citation contract; `CODE` hits expose matched `article_id`s. |
 | `fr_get_act(text_id, date)` | Consult a LODA law/decree by `LEGITEXT...` id. Returns metadata + a table of contents (`articles`). |
-| `fr_get_text(article_id)` | Verbatim text of a single article by `LEGIARTI...` id. |
+| `fr_get_text(article_id)` | Verbatim text of a single article by `LEGIARTI...` id (legislation/codes) or `KALIARTI...` id (collective agreements). |
 | `fr_get_decision(decision_id)` | A court decision by `JURITEXT...`, `CONSTEXT...` or `CETATEXT...` id, with its **native `ecli`** (when populated), court, formation, solution and text. |
+| `fr_get_deliberation(deliberation_id)` | A CNIL deliberation by `CNILTEXT...` id (sanctions, authorizations, opinions) with its verbatim text and the citation `CNIL, deliberation n° ... du ...`. |
+| `fr_get_convention(convention_id)` | A collective labour agreement text by `KALITEXT...` id. Returns metadata + a table of contents whose `KALIARTI...` ids resolve via `fr_get_text`. |
+| `fr_get_company_agreement(agreement_id)` | A company-level agreement by `ACCOTEXT...` id - **metadata only** (company, SIRET, IDCC, sector, themes, unions, dates). Legifrance ships the full ACCO text only as a `.docx` attachment, so the tool cites `source_url` instead of re-serving it. |
+
+### Fonds covered (live totals, sandbox, 2026-07-08)
+
+| Fond | Corpus | Verified total |
+| --- | --- | --- |
+| `CNIL` | CNIL deliberations | >= 26 759 (`totalResultNumber` on a broad stopword query) |
+| `KALI` | Collective labour agreements (conventions collectives) | >= 35 790 |
+| `ACCO` | Company-level agreements | >= 387 656 |
 
 ### Jurisdictions covered
 
@@ -57,9 +69,12 @@ Conseil constitutionnel decisions get the French citation convention: `Cons. con
 
 > **Judilibre** (`api.piste.gouv.fr/cassation/judilibre`) was evaluated as an alternative Cour de
 > cassation source but requires its own PISTE API subscription beyond the Legifrance one already
-> held by this connector (confirmed via a live sandbox probe: `403` without it). Not integrated in
-> this release - `JURI` already covers Cour de cassation case law through the existing Legifrance
-> subscription.
+> held by this connector. Re-verified 2026-07-08: a valid Legifrance token (granted scope
+> `openid resource.READ`) gets `403` on the sandbox host for every endpoint and auth shape tried
+> (`Bearer`, `KeyId`, no-auth -> `400`), and the sandbox application is rejected outright by the
+> production OAuth endpoint (`invalid_client`). Subscribing the Judilibre API to the PISTE
+> application is a dashboard action outside this connector. Not integrated - `JURI` already covers
+> Cour de cassation case law through the existing Legifrance subscription.
 
 ### A note on ELI vs ECLI
 

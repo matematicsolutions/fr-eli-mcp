@@ -1,0 +1,278 @@
+{
+ "executionTime": 81,
+ "results": [
+  {
+   "titles": [
+    {
+     "id": "ACCOTEXT000053643828",
+     "cid": "ACCOTEXT000053643828",
+     "title": "Accord d'entreprise relatif au <mark>télétravail</mark>",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": "[...]définitions liées au <mark>télétravail</mark>\t4\n3.1.\tDéfinition du <mark>Télétravail</mark>\t4\n3.2.\tDéfinition du Télétravailleur\t5\n4.\tOrganisation du <mark>télétravail</mark>\t5\n4.1.\tNombre de jours forfaitaires de <mark>télétravail</mark>\t5\n4.2.\tUtilisation[...]",
+   "type": null,
+   "nature": null,
+   "origin": "ACCO",
+   "etat": null,
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": null,
+   "sections": [
+    {
+     "id": null,
+     "title": null,
+     "dateVersion": null,
+     "legalStatus": null,
+     "extracts": [
+      {
+       "id": null,
+       "title": null,
+       "legalStatus": null,
+       "dateVersion": null,
+       "dateDebut": null,
+       "dateFin": null,
+       "searchFieldName": "Raison sociale",
+       "num": null,
+       "values": [
+        "CORSAIR <mark>(Télétravail)</mark>"
+       ],
+       "type": null
+      },
+      {
+       "id": null,
+       "title": null,
+       "legalStatus": null,
+       "dateVersion": null,
+       "dateDebut": null,
+       "dateFin": null,
+       "searchFieldName": "Thématiques",
+       "num": null,
+       "values": [
+        "<mark>Télétravail</mark>"
+       ],
+       "type": null
+      }
+     ]
+    }
+   ],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": null,
+   "dossiersLegislatifs": [],
+   "nor": null,
+   "motsCles": [],
+   "appellations": [],
+   "idAttachment": null,
+   "sizeAttachment": "34198",
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": "CORSAIR (Télétravail)",
+   "idcc": "275",
+   "descriptionFusionHtml": null,
+   "dateSignature": "2025-12-19T00:00:00.000+0000",
+   "dateDiffusion": "2026-03-10T00:00:00.000+0000",
+   "reference": "T09426064936",
+   "themes": [
+    "Télétravail"
+   ],
+   "conforme": true,
+   "resumePrincipal": [],
+   "autreResume": []
+  },
+  {
+   "titles": [
+    {
+     "id": "ACCOTEXT000051888026",
+     "cid": "ACCOTEXT000051888026",
+     "title": "Accord <mark>Télétravail</mark> Hopium",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": "[...]ACCORD <mark>TELETRAVAIL</mark> HOPIUM\nPRÉAMBULE\t3\nARTICLE 1 - DÉFINITIONS ET PRINCIPES RELATIFS AUX TRAVAIL HYBRIDE ET AU <mark>TÉLÉTRAVAIL</mark>\t4\n1.1. Définition du <mark>télétravail</mark>\t4\n1.2. Définition du « travailleur hybride » ou[...]",
+   "type": null,
+   "nature": null,
+   "origin": "ACCO",
+   "etat": null,
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": null,
+   "sections": [
+    {
+     "id": null,
+     "title": null,
+     "dateVersion": null,
+     "legalStatus": null,
+     "extracts": [
+      {
+       "id": null,
+       "title": null,
+       "legalStatus": null,
+       "dateVersion": null,
+       "dateDebut": null,
+       "dateFin": null,
+       "searchFieldName": "Raison sociale",
+       "num": null,
+       "values": [
+        "HOPIUM <mark>(Télétravail)</mark>"
+       ],
+       "type": null
+      },
+      {
+       "id": null,
+       "title": null,
+       "legalStatus": null,
+       "dateVersion": null,
+       "dateDebut": null,
+       "dateFin": null,
+       "searchFieldName": "Thématiques",
+       "num": null,
+       "values": [
+        "<mark>Télétravail</mark>"
+       ],
+       "type": null
+      }
+     ]
+    }
+   ],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": null,
+   "dossiersLegislatifs": [],
+   "nor": null,
+   "motsCles": [],
+   "appellations": [],
+   "idAttachment": null,
+   "sizeAttachment": "35552",
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": "HOPIUM (Télétravail)",
+   "idcc": "1486",
+   "descriptionFusionHtml": null,
+   "dateSignature": "2025-02-07T00:00:00.000+0000",
+   "dateDiffusion": "2025-07-15T00:00:00.000+0000",
+   "reference": "T09425063423",
+   "themes": [
+    "Télétravail"
+   ],
+   "conforme": false,
+   "resumePrincipal": [],
+   "autreResume": []
+  }
+ ],
+ "facets": [
+  {
+   "facetElem": "SIGNATAIRE",
+   "field": "syndicats.libelle",
+   "values": {
+    "Autre": 4996,
+    "CFDT": 26718,
+    "CFE-CGC": 16871,
+    "CFTC": 9628,
+    "CGT": 17121,
+    "CGT-FO": 11107,
+    "SOLIDAIRES": 2090,
+    "UNSA": 4897
+   },
+   "childs": {},
+   "totalElement": 0
+  },
+  {
+   "facetElem": "FOND",
+   "field": "origine",
+   "values": {
+    "ACCO": 387844,
+    "CETAT": 569322,
+    "CIRC": 10646,
+    "CNIL": 26759,
+    "CONSTIT": 7372,
+    "JORF": 1125515,
+    "JUFI": 3502,
+    "JURI": 605651,
+    "KALI": 21911,
+    "LEGI": 117230
+   },
+   "childs": {},
+   "totalElement": 0
+  },
+  {
+   "facetElem": "THEME",
+   "field": "themes.libelle",
+   "values": {
+    "Accord de maintien dans l'emploi (à venir)": 1,
+    "Accords de méthode (PSE)": 79,
+    "Accords de méthode (pénibilité)": 155,
+    "Aménagement du temps de travail (modulation, annualisation, cycles)": 4368,
+    "Autre, précisez": 13174,
+    "Autres dispositions Egalité professionnelle": 6661,
+    "Autres dispositions de conditions de travail (CHSCT, médecine du travail, politique générale de prévention)": 1115,
+    "Autres dispositions durée et aménagement du temps de travail": 6004,
+    "Autres dispositions durée et aménagement du temps de travail ": 55,
+    "Autres dispositions emploi": 890,
+    "Calendrier des négociations": 599,
+    "Classifications": 536,
+    "Commissions paritaires": 54,
+    "Compte épargne temps": 1721,
+    "Contrat de génération, Seniors (à venir)": 3,
+    "Couverture complémentaire santé - maladie": 1656,
+    "Dispositifs don de jour et jour de solidarité": 2218,
+    "Distribution d'actions gratuites": 19,
+    "Droit syndical, IRP, expression des salariés": 1557,
+    "Droit à la déconnexion et outils numériques": 5304,
+    "Durée collective du temps de travail": 2540,
+    "Egalité salariale F/H": 7697,
+    "Elections professionnelles, prorogations de mandat et vote électronique": 352,
+    "Evolution des primes": 4356,
+    "Evolution des salaires (augmentation, gel, diminution)": 9602,
+    "Fin de conflit": 49,
+    "Fixation des congés (jours fériés, ponts, RTT)": 4161,
+    "Forfaits (en heures, en jours)": 2757,
+    "Formation professionnelle": 1210,
+    "GPEC": 747,
+    "Heures supplémentaires (contingent, majoration)": 2153,
+    "Indemnités (dont kilométrique)": 3281,
+    "Intéressement": 830,
+    "Mesures d'âge (seniors, contrat de génération...)": 511,
+    "Mobilité (géographique, professionnelle - promotions)": 505,
+    "Non discrimination - Diversité": 4863,
+    "PEE ou PEG": 393,
+    "PEI": 35,
+    "PERCO et PERCOI": 402,
+    "PPVE": 3,
+    "Participation": 473,
+    "Performance collective (accord de compétitivité)": 51,
+    "Prime de partage des profits": 139,
+    "Prévoyance collective, autre que santé maladie": 1089,
+    "Pénibilité du travail (1% pénibilité, prévention, compensation/réparation)": 402,
+    "QVT, conciliation vie personnelle/vie professionnelle": 8086,
+    "Reprise des données": 388,
+    "Retraite complémentaire - supplémentaire": 240,
+    "Rupture conventionnelle collective": 37,
+    "Stress, risques psycho-sociaux": 630,
+    "Supplément d'intéressement": 51,
+    "Supplément de participation": 29,
+    "Système de prime (autre qu'évolution)": 5655,
+    "Système de rémunération (autres qu'évolution)": 2933,
+    "Travail de nuit": 966,
+    "Travail du dimanche": 805,
+    "Travail à temps partiel": 1949,
+    "Travailleurs handicapés": 2769,
+    "Télétravail": 19986
+   },
+   "childs": {},
+   "totalElement": 0
+  }
+ ],
+ "totalResultNumber": 54491,
+ "totalArticleResultNumber": 0,
+ "typePagination": "DEFAUT",
+ "descriptionFusionHtml": null
+}

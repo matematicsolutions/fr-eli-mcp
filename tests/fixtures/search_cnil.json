@@ -1,0 +1,146 @@
+{
+ "executionTime": 43,
+ "results": [
+  {
+   "titles": [
+    {
+     "id": "CNILTEXT000053352643",
+     "cid": "CNILTEXT000053352643",
+     "title": "Délibération de la formation restreinte n° SAN-2026-002 du 8 janvier 2026 prononçant une <mark>sanction</mark> pécuniaire à l'encontre de la société FREE",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": "[...] 1989), exige que les obligations et <mark>sanctions</mark> en cas de manquement aient été définis à l’avance. 42. [...] Sur la publicité de la <mark>sanction</mark> 202. [...]",
+   "type": "data_cnil",
+   "nature": "deliberation",
+   "origin": "CNIL",
+   "etat": "VIGUEUR",
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": null,
+   "sections": [],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": "2026-01-14T00:00:00.000+0000",
+   "dossiersLegislatifs": [],
+   "nor": null,
+   "motsCles": [],
+   "appellations": [],
+   "idAttachment": null,
+   "sizeAttachment": null,
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": null,
+   "idcc": null,
+   "descriptionFusionHtml": null,
+   "dateSignature": null,
+   "dateDiffusion": null,
+   "reference": null,
+   "themes": [],
+   "conforme": false,
+   "resumePrincipal": [],
+   "autreResume": []
+  },
+  {
+   "titles": [
+    {
+     "id": "CNILTEXT000053408671",
+     "cid": "CNILTEXT000053408671",
+     "title": "Délibération de la formation restreinte n° SAN–2026-003 du 22 janvier 2026 prononçant une <mark>sanction</mark> pécuniaire à l'encontre de l’opérateur FRANCE TRAVAIL",
+     "legalStatus": null,
+     "startDate": null,
+     "endDate": null,
+     "nature": null
+    }
+   ],
+   "text": "[...] Le rapporteur considère qu’il est possible pour la formation restreinte de prononcer une <mark>sanction</mark> pécuniaire à l’encontre de FRANCE TRAVAIL, en sa qualité d’opérateur indépendant de l'État. 110. [...] Sur la publicité de la <mark>sanction</mark> 145. [...]",
+   "type": "data_cnil",
+   "nature": "deliberation",
+   "origin": "CNIL",
+   "etat": "VIGUEUR",
+   "solution": null,
+   "moreArticlesCount": 0,
+   "date": null,
+   "sections": [],
+   "num": null,
+   "jorfText": null,
+   "numParution": null,
+   "datePublication": "2026-01-29T00:00:00.000+0000",
+   "dossiersLegislatifs": [],
+   "nor": null,
+   "motsCles": [],
+   "appellations": [],
+   "idAttachment": null,
+   "sizeAttachment": null,
+   "moreArticle": false,
+   "additionalResult": {},
+   "raisonSociale": null,
+   "idcc": null,
+   "descriptionFusionHtml": null,
+   "dateSignature": null,
+   "dateDiffusion": null,
+   "reference": null,
+   "themes": [],
+   "conforme": false,
+   "resumePrincipal": [],
+   "autreResume": []
+  }
+ ],
+ "facets": [
+  {
+   "facetElem": "TYPE",
+   "field": "nature",
+   "values": {
+    "Décision": 141,
+    "Délibération": 993
+   },
+   "childs": {},
+   "totalElement": 0
+  },
+  {
+   "facetElem": "NATURE_DELIB",
+   "field": "natureDelib",
+   "values": {
+    "Autorisation de recherche": 5,
+    "Autorisation de transfert": 51,
+    "Autre autorisation": 276,
+    "Avis": 266,
+    "Certification/label": 80,
+    "Cloture": 42,
+    "Disposition interne cnil": 69,
+    "Mise en demeure": 96,
+    "Recommandation/lignes directrices": 28,
+    "Referentiel/reglement type/norme": 40,
+    "Sanction": 173
+   },
+   "childs": {},
+   "totalElement": 0
+  },
+  {
+   "facetElem": "FOND",
+   "field": "origine",
+   "values": {
+    "ACCO": 387844,
+    "CETAT": 569322,
+    "CIRC": 10646,
+    "CNIL": 26759,
+    "CONSTIT": 7372,
+    "JORF": 1125516,
+    "JUFI": 3502,
+    "JURI": 605651,
+    "KALI": 21911,
+    "LEGI": 117230
+   },
+   "childs": {},
+   "totalElement": 0
+  }
+ ],
+ "totalResultNumber": 1134,
+ "totalArticleResultNumber": 0,
+ "typePagination": "DEFAUT",
+ "descriptionFusionHtml": null
+}

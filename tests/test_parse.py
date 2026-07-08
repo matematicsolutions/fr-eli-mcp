@@ -143,3 +143,91 @@ def test_no_fabricated_eli():
     ]:
         for hit in citations.normalize_search(_load(fx), fond)["hits"]:
             assert "/eli/" not in (hit["eli_uri"] or ""), "must not fabricate a native /eli/ URI"
+
+
+# ---------------------------------------------------------------------------
+# feature-003: CNIL deliberations, KALI collective agreements, ACCO agreements
+# ---------------------------------------------------------------------------
+
+
+def test_search_cnil_hits():
+    norm = citations.normalize_search(_load("search_cnil.json"), "CNIL")
+    assert norm["total"] >= 1
+    hit = norm["hits"][0]
+    assert hit["kind"] == "cnil"
+    assert hit["id"].startswith("CNILTEXT")
+    assert hit["source_url"].startswith("https://www.legifrance.gouv.fr/cnil/id/")
+    assert hit["eli_uri"] == hit["source_url"]
+    assert hit["human_readable_citation"]
+    assert "<mark>" not in (hit["title"] or "")
+
+
+def test_search_kali_hits():
+    norm = citations.normalize_search(_load("search_kali.json"), "KALI")
+    assert norm["total"] >= 1
+    hit = norm["hits"][0]
+    assert hit["kind"] == "kali"
+    assert hit["id"].startswith("KALITEXT")
+    assert hit["source_url"].startswith("https://www.legifrance.gouv.fr/conv_coll/id/")
+    assert hit["eli_uri"] == hit["source_url"]
+    assert hit["human_readable_citation"]
+
+
+def test_search_acco_hits_carry_company():
+    norm = citations.normalize_search(_load("search_acco.json"), "ACCO")
+    assert norm["total"] >= 1
+    hit = norm["hits"][0]
+    assert hit["kind"] == "acco"
+    assert hit["id"].startswith("ACCOTEXT")
+    assert hit["source_url"].startswith("https://www.legifrance.gouv.fr/acco/id/")
+    assert hit["raison_sociale"], "ACCO hit should carry the depositing company"
+    assert hit["idcc"], "ACCO hit should carry the IDCC"
+    # Citation carries the company so the agreement is identifiable.
+    assert hit["raison_sociale"] in hit["human_readable_citation"]
+
+
+def test_consult_cnil_citation_and_text():
+    norm = citations.normalize_cnil(_load("consult_cnil.json"))
+    assert norm is not None
+    assert norm["deliberation_id"].startswith("CNILTEXT")
+    assert norm["nature_delib"] == "Sanction"
+    assert norm["text"], "deliberation text expected"
+    assert norm["source_url"] == "https://www.legifrance.gouv.fr/cnil/id/CNILTEXT000053352643"
+    assert norm["eli_uri"] == norm["source_url"]
+    # Citation convention: "CNIL, deliberation n° SAN-2026-002 du 8 janvier 2026"
+    assert norm["human_readable_citation"].startswith("CNIL, deliberation n° SAN-2026-002 du")
+
+
+def test_consult_kali_toc_resolvable_via_get_text():
+    norm = citations.normalize_kali(_load("consult_kali.json"))
+    assert norm is not None
+    assert norm["text_id"].startswith("KALITEXT")
+    assert norm["source_url"].startswith("https://www.legifrance.gouv.fr/conv_coll/id/")
+    assert norm["eli_uri"] == norm["source_url"]
+    assert norm["human_readable_citation"]
+    assert norm["articles"], "table of contents expected"
+    assert norm["articles"][0]["article_id"].startswith("KALIARTI")
+
+
+def test_consult_acco_metadata_only_no_docx_payload():
+    norm = citations.normalize_acco(_load("consult_acco.json"))
+    assert norm is not None
+    assert norm["agreement_id"].startswith("ACCOTEXT")
+    assert norm["raison_sociale"]
+    assert norm["siret"]
+    assert norm["themes"]
+    assert norm["source_url"].startswith("https://www.legifrance.gouv.fr/acco/id/")
+    assert norm["eli_uri"] == norm["source_url"]
+    assert norm["attachment_note"], "must be explicit that full text is a docx attachment"
+    assert "text" not in norm, "ACCO is metadata-only - no fabricated text field"
+    assert norm["raison_sociale"] in norm["human_readable_citation"]
+
+
+def test_kali_article_url_uses_conv_coll():
+    fx = _load("consult_article.json")
+    fx["article"]["id"] = "KALIARTI000049886059"
+    norm = citations.normalize_article(fx)
+    assert norm is not None
+    assert norm["source_url"] == (
+        "https://www.legifrance.gouv.fr/conv_coll/id/KALIARTI000049886059"
+    )

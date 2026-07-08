@@ -27,7 +27,7 @@ from .cache import HttpCache
 DEFAULT_OAUTH_URL = "https://sandbox-oauth.piste.gouv.fr/api/oauth/token"
 DEFAULT_BASE_URL = "https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app"
 DEFAULT_TIMEOUT = httpx.Timeout(40.0, connect=10.0)
-USER_AGENT = "fr-eli-mcp/0.2.0 (+https://github.com/matematicsolutions/fr-eli-mcp)"
+USER_AGENT = "fr-eli-mcp/0.3.0 (+https://github.com/matematicsolutions/fr-eli-mcp)"
 
 _RETRY_STATUS = frozenset({429, 500, 502, 503, 504})
 _MAX_ATTEMPTS = 3
@@ -196,3 +196,12 @@ class LegifranceClient:
 
     async def consult_juri(self, text_id: str) -> dict:
         return await self._post("/consult/juri", {"textId": text_id}, category="act")
+
+    async def consult_cnil(self, text_id: str) -> dict:
+        return await self._post("/consult/cnil", {"textId": text_id}, category="act")
+
+    async def consult_kali_text(self, text_id: str) -> dict:
+        return await self._post("/consult/kaliText", {"id": text_id}, category="act")
+
+    async def consult_acco(self, agreement_id: str) -> dict:
+        return await self._post("/consult/acco", {"id": agreement_id}, category="act")
