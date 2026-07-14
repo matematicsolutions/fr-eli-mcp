@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "generated_note": "Volatile runtime config for fr-eli-mcp (base defaults to the Legifrance SANDBOX). Edit + re-run the release workflow to repoint to production WITHOUT a PyPI release. Consumed lazily on first tool call; falls back to the hardcoded client default if unavailable (offline-safe).",
+  "base_urls": {
+    "eli": "https://sandbox-api.piste.gouv.fr/dila/legifrance/lf-engine-app"
+  },
+  "citation_grammar_version": "fr-eli/2026.07"
+}
