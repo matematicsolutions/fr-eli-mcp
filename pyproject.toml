@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fr-eli-mcp"
-version = "0.4.0"
+version = "0.4.1"
 description = "MCP server for the French Legifrance API via PISTE (legifrance.gouv.fr) — search legislation (LODA, codes) and case law (JURI, Conseil constitutionnel, administrative courts) with verifiable citations and native ECLI."
 readme = "README.md"
 license = { text = "Apache-2.0" }
