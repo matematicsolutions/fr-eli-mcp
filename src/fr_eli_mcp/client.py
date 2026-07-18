@@ -22,6 +22,7 @@ import time
 import anyio
 import httpx
 
+from . import runtime
 from .cache import HttpCache
 
 DEFAULT_OAUTH_URL = "https://sandbox-oauth.piste.gouv.fr/api/oauth/token"
@@ -43,7 +44,7 @@ def _env_oauth_url() -> str:
 
 
 def _env_base_url() -> str:
-    return os.environ.get("FR_ELI_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
+    return os.environ.get("FR_ELI_BASE_URL", runtime.base_url("eli", DEFAULT_BASE_URL)).rstrip("/")
 
 
 def _env_credentials() -> tuple[str, str]:
