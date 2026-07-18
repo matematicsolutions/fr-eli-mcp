@@ -3,42 +3,45 @@
 <!-- mcp-name: io.github.matematicsolutions/fr-eli-mcp -->
 
 
-## Instalacja (jedna komenda)
+## Install (one command)
 
-Opublikowany na PyPI + MCP Registry (`io.github.matematicsolutions/fr-eli-mcp`). Uruchomienie bez klonowania:
+Published on PyPI + MCP Registry (`io.github.matematicsolutions/fr-eli-mcp`). Run without cloning:
 
 ```bash
 uvx fr-eli-mcp
 ```
 
-Wymaga kluczy PISTE w env: `PISTE_CLIENT_ID`, `PISTE_CLIENT_SECRET` (Legifrance/PISTE).
+Requires PISTE credentials in env: `PISTE_CLIENT_ID`, `PISTE_CLIENT_SECRET` (Legifrance/PISTE).
 
-Konfiguracja klienta MCP (stdio):
+Configure your MCP client (stdio):
 
 ```json
 { "mcpServers": { "fr-eli-mcp": { "command": "uvx", "args": ["fr-eli-mcp"] } } }
 ```
 
-### Windows 11 ze Smart App Control
+### Windows 11 with Smart App Control
 
-Smart App Control blokuje niepodpisane pliki wykonywalne, a `uvx.exe`, `pip.exe`
-i generowany przy instalacji `fr-eli-mcp.exe` podpisane nie sa. `python.exe`
-z python.org jest podpisany przez Python Software Foundation, wiec uruchomienie
-przez modul omija blokade:
+Smart App Control blocks unsigned executables, which covers `uvx.exe`, `pip.exe`
+and the `fr-eli-mcp.exe` launcher that pip writes at install time. The `python.exe` and
+`py.exe` from the python.org installer are signed by the Python Software
+Foundation, so running the module through the interpreter works:
 
 ```bash
 python -m pip install fr-eli-mcp
 python -m fr_eli_mcp
 ```
 
+`pip.exe` is blocked for the same reason, so install with `python -m pip`, not
+`pip install`. If `python` is not on PATH, use the Windows launcher: `py -3 -m fr_eli_mcp`.
+
 ```json
 { "mcpServers": { "fr-eli-mcp": { "command": "python", "args": ["-m", "fr_eli_mcp"] } } }
 ```
 
-Nie wylaczaj Smart App Control, zeby to obejsc - wylaczenia nie da sie cofnac
-bez ponownej instalacji systemu.
+Do not turn Smart App Control off to work around this - it cannot be re-enabled
+without reinstalling Windows.
 
-(Budowanie ze źródeł — niżej.)
+Building from source: see [Install](#install).
 
 An MCP server for the **French Legifrance API** via [PISTE](https://piste.gouv.fr). It searches
 French legislation (LODA laws & decrees, codes), case law from three jurisdictions - Cour de
