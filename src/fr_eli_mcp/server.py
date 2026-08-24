@@ -26,6 +26,7 @@ from . import citations
 from .audit import AuditLogger, hash_input, timer
 from .client import CredentialsError, LegifranceClient
 from .models import Act, ArticleText, CompanyAgreement, Decision, Deliberation, SearchResult
+from .coverage import Coverage, build_coverage
 
 INSTRUCTIONS = """\
 This MCP server exposes the French Legifrance API through PISTE (piste.gouv.fr). It covers consolidated legislation (LODA laws & decrees, and codes), case law from three jurisdictions - Cour de cassation / cours d'appel (JURI), the Conseil constitutionnel (CONSTIT - QPC/DC decisions), and the administrative courts (CETAT - Conseil d'Etat, cours administratives d'appel, tribunaux administratifs) - plus CNIL deliberations (CNIL), collective labour agreements (KALI) and company-level agreements (ACCO). Every response carries the citation contract: a stable `eli_uri`, a `human_readable_citation` (French convention) and a `source_url` (a resolvable legifrance.gouv.fr page).
@@ -445,6 +446,20 @@ async def fr_get_convention(convention_id: str) -> Act:
 
 # ---------------------------------------------------------------------------
 # fr_get_company_agreement (fond ACCO, feature-003)
+@mcp.tool(annotations=READ_ONLY)
+async def fr_coverage() -> Coverage:
+    """Declare what this connector covers, how it is sourced, and what it does NOT cover.
+
+    Call this before telling a user that the law "does not contain" something, and whenever
+    a search comes back empty: the absence may be a gap in this connector rather than in the
+    law. Every gap carries a fallback saying where to look instead.
+
+    Returns:
+        ``Coverage`` with families, an as-of note, and a non-empty list of known gaps.
+    """
+    return build_coverage()
+
+
 # ---------------------------------------------------------------------------
 
 

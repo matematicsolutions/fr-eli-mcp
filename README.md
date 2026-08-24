@@ -68,6 +68,7 @@ Every response carries the citation contract: a stable `eli_uri`, a `human_reada
 | `fr_get_deliberation(deliberation_id)` | A CNIL deliberation by `CNILTEXT...` id (sanctions, authorizations, opinions) with its verbatim text and the citation `CNIL, deliberation n° ... du ...`. |
 | `fr_get_convention(convention_id)` | A collective labour agreement text by `KALITEXT...` id. Returns metadata + a table of contents whose `KALIARTI...` ids resolve via `fr_get_text`. |
 | `fr_get_company_agreement(agreement_id)` | A company-level agreement by `ACCOTEXT...` id - **metadata only** (company, SIRET, IDCC, sector, themes, unions, dates). Legifrance ships the full ACCO text only as a `.docx` attachment, so the tool cites `source_url` instead of re-serving it. |
+| `fr_coverage()` | Declare what this connector covers, when each family was captured, and - explicitly - what it does NOT cover. Every gap carries a fallback. |
 
 ### Fonds covered (live totals, sandbox, 2026-07-08)
 
