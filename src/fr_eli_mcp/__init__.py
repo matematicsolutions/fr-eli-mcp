@@ -1,4 +1,4 @@
 """fr-eli-mcp - MCP server for the French Legifrance API via PISTE (legifrance.gouv.fr)."""
 
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 __all__ = ["__version__"]
