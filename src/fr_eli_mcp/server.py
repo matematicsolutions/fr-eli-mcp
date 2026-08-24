@@ -43,6 +43,7 @@ This MCP server exposes the French Legifrance API through PISTE (piste.gouv.fr).
 
 ## Hard constraints
 
+- **Do not answer past the edge of this corpus** - when a search comes back empty, or the question touches material this connector does not carry, call `fr_coverage` and relay what it says is missing. Absence here is not absence in the law.
 - **ELI on Legifrance:** the PISTE consult API returns the native ELI field *null* for legislation. `eli_uri` therefore carries the stable resolvable Legifrance resource URL - it is NOT a fabricated `/eli/...` string. Read `eli_note` and relay it; never invent an ELI.
 - **ECLI is real for case law, but not always populated** - `fr_get_decision` returns a native authoritative `ecli` for Cour de cassation (e.g. `ECLI:FR:CCASS:2025:C100399`), Conseil constitutionnel (e.g. `ECLI:FR:CC:2025:2025.1173.QPC`) and Conseil d'Etat (e.g. `ECLI:FR:CECHR:2026:506507.20260529`). Cite it verbatim when present. CAA/TA decisions under fond `CETAT` frequently have `ecli=null` - never fabricate one; cite `human_readable_citation` + `source_url` instead.
 - **Every response has `human_readable_citation` + `source_url`** - cite both to the user.
